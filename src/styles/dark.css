@@ -1,0 +1,82 @@
+/* ===== DARK MODE OVERRIDES (Task 18) ===== */
+body.dark {
+  background: #0A0A0A;
+  color: #E8E6E6;
+}
+
+body.dark .hero { background: #0A0A0A; }
+body.dark .hero h1 { color: #E8E6E6; }
+body.dark .hero-l1 { color: rgba(232, 230, 230, 0.5); }
+body.dark .hero .sub-text { color: rgba(232, 230, 230, 0.55); }
+
+body.dark nav {
+  background: rgba(10, 10, 10, 0.75);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+body.dark nav.scrolled {
+  background: rgba(10, 10, 10, 0.95);
+  box-shadow: 0 4px 48px rgba(0, 0, 0, 0.6);
+}
+body.dark .nav-links a { color: rgba(232, 230, 230, 0.6); }
+body.dark .nav-links a:hover { color: #E8E6E6; }
+body.dark .logo-text {
+  background: linear-gradient(135deg, #E8E6E6, var(--red-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body.dark .hamburger span { background: #E8E6E6; }
+body.dark .lang-btn {
+  background: rgba(163, 31, 52, 0.06);
+  border-color: rgba(163, 31, 52, 0.1);
+  color: rgba(232, 230, 230, 0.5);
+}
+
+body.dark .section-title { color: #E8E6E6; }
+body.dark .section-sub { color: rgba(232, 230, 230, 0.5); }
+
+body.dark .values,
+body.dark .ventures,
+body.dark .testimonials,
+body.dark .metrics,
+body.dark .funds { background: #0A0A0A !important; }
+
+body.dark .about,
+body.dark .timeline-section,
+body.dark .team,
+body.dark .platform { background: #0A0A0A !important; }
+
+body.dark .cta {
+  background: linear-gradient(135deg, #0A0A0A, #121212) !important;
+}
+body.dark .cta h2 { color: #E8E6E6; }
+
+body.dark footer {
+  background: #0A0A0A;
+  border-top-color: rgba(255, 255, 255, 0.03);
+}
+
+body.dark .about-card,
+body.dark .value-card,
+body.dark .venture-card,
+body.dark .funds-card,
+body.dark .team-card,
+body.dark .platform-item,
+body.dark .carousel-card,
+body.dark .metric-item {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+}
+
+body.dark .value-card h4,
+body.dark .funds-card h4,
+body.dark .team-card h4,
+body.dark .about-card h3,
+body.dark .venture-card h3 { color: rgba(232, 230, 230, 0.85); }
+
+body.dark .value-card p,
+body.dark .funds-card p,
+body.dark .team-card p,
+body.dark .about-card p,
+body.dark .venture-card p { color: rgba(232, 230, 230, 0.4); }

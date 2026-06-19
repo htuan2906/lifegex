@@ -1,0 +1,8 @@
+/* main.css — imports all partials */
+@import './tokens.css';
+@import './base.css';
+@import './animations.css';
+@import './components.css';
+@import './dark.css';
+@import './responsive.css';
+@import './a11y.css';

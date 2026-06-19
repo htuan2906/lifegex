@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeGex — For Better Human Experiences</title>
+  <meta name="description" content="LifeGex is a parent company and holding operating system that owns, governs, validates, and scales a portfolio of ventures dedicated to better human experiences.">
+  <meta name="theme-color" content="#A31F34">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link rel="modulepreload" href="data:text/javascript;base64,LyogbWFpbi5qcyDigJQgRW50cnkgcG9pbnQ6IGltcG9ydCBzdHlsZXMgKyBib290c3RyYXAgYXBwICovCmltcG9ydCAnLi9zdHlsZXMvbWFpbi5jc3MnOwppbXBvcnQgeyBhcHAgfSBmcm9tICcuL2FwcC5qcyc7Cgpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdET01Db250ZW50TG9hZGVkJywgKCkgPT4gewogIGFwcC5pbml0KCk7Cn0pOwoKLy8gSE1SIHN1cHBvcnQKaWYgKGltcG9ydC5tZXRhLmhvdCkgewogIGltcG9ydC5tZXRhLmhvdC5hY2NlcHQoKTsKfQo=">
+  <script type="module" crossorigin src="/assets/index-Cr8z6_qp.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vendor-CZHgqTAH.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-VyjMZ2Yu.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-logo">LifeGex</div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    <div class="loader-text" data-i18n="loader_label">Loading</div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- 3D Background -->
+  <canvas id="three-canvas"></canvas>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Navigation -->
+  <app-navigation>
+    <nav id="navbar">
+      <div class="container">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C94B4B"/><stop offset="100%" stop-color="#A31F34"/></linearGradient></defs>
+            <path d="M3 12h4l3-8 4 16 3-8h4"/>
+          </svg>
+          <span class="logo-text">LifeGex</span>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav_about">About</a></li>
+          <li><a href="#ventures" data-i18n="nav_ventures">Ventures</a></li>
+          <li><a href="#timeline" data-i18n="nav_timeline">Timeline</a></li>
+          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+          <li><theme-toggle id="themeToggle" title="Toggle dark mode">🌙</theme-toggle></li>
+          <li>
+            <div class="lang-selector">
+              <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+                <span id="langCurrent">EN</span>
+                <span class="arrow">▾</span>
+              </button>
+              <div class="lang-dropdown" id="langDropdown" role="listbox">
+                <button onclick="window.setLang?.('en')" data-lang="en" class="active" role="option"><span class="lang-flag">🇬🇧</span> English</button>
+                <button onclick="window.setLang?.('zh')" data-lang="zh" role="option"><span class="lang-flag">🇨🇳</span> 中文</button>
+                <button onclick="window.setLang?.('es')" data-lang="es" role="option"><span class="lang-flag">🇪🇸</span> Español</button>
+                <button onclick="window.setLang?.('fr')" data-lang="fr" role="option"><span class="lang-flag">🇫🇷</span> Français</button>
+                <button onclick="window.setLang?.('vi')" data-lang="vi" role="option"><span class="lang-flag">🇻🇳</span> Tiếng Việt</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </app-navigation>
+
+  <!-- Sticky Nav Indicator (Task 43) -->
+  <sticky-nav-indicator class="sticky-nav-indicator">
+    <div class="nav-progress-bar"></div>
+  </sticky-nav-indicator>
+
+  <main id="main">
+
+  <!-- Hero -->
+  <hero-section>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div>
+          <div class="hero-badge"><span class="dot"></span><span data-i18n="hero_badge">Parent Company</span></div>
+          <h1 id="heroTitle" data-split="chars"><span data-i18n="hero_l1" class="hero-l1">For Better</span><br><span class="gradient-text hero-l2" data-i18n="hero_l2">Human Experiences</span></h1>
+          <div class="sub-text" data-i18n="hero_desc">A parent company building a portfolio of ventures that unlock a new asset class — trusted, technology-enabled human experiences.</div>
+          <div class="hero-buttons">
+            <a href="#ventures" class="btn btn-primary magnetic"><span data-i18n="hero_btn1">Explore Ventures</span> →</a>
+            <a href="#about" class="btn btn-secondary magnetic" data-i18n="hero_btn2">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <canvas id="hero3dCanvas"></canvas>
+        </div>
+      </div>
+    </section>
+  </hero-section>
+
+  <!-- About -->
+  <about-section>
+    <section class="about" id="about">
+      <div class="container">
+        <div class="text-center">
+          <div class="section-label reveal"><span class="line"></span><span data-i18n="about_label">About LifeGex</span></div>
+          <h2 class="section-title reveal reveal-d1"><span data-i18n="about_t1">The World's First</span> <span class="highlight" data-i18n="about_t2">Experience Venture System</span></h2>
+          <p class="section-sub mx-auto reveal reveal-d2 drop-cap" data-i18n="about_desc">The global market for human experiences — creative services, dining, care coordination, and education — is fragmented, trust-deficient, and underserved by technology.</p>
+        </div>
+        <div class="about-grid">
+          <div class="about-card reveal reveal-d1 tilt-card"><span class="cn">01</span><div class="icon icon-bg1">🎯</div><h3 data-i18n="about_c1_t">Multi-Venture Portfolio</h3><p data-i18n="about_c1_d">Instead of betting on one app, LifeGex distributes risk across four validated ventures.</p></div>
+          <div class="about-card reveal reveal-d2 tilt-card"><span class="cn">02</span><div class="icon icon-bg2">🏗️</div><h3 data-i18n="about_c2_t">Compounding Moat</h3><p data-i18n="about_c2_d">Shared modules get stronger with every venture added, creating data network effects.</p></div>
+          <div class="about-card reveal reveal-d3 tilt-card"><span class="cn">03</span><div class="icon icon-bg3">📊</div><h3 data-i18n="about_c3_t">Capital-Efficient Scaling</h3><p data-i18n="about_c3_d">Every dollar is allocated by evidence, not intuition.</p></div>
+        </div>
+      </div>
+    </section>
+  </about-section>
+
+  <!-- Values -->
+  <section class="values" id="values">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-label reveal"><span class="line"></span><span data-i18n="val_label">Core Values</span></div>
+        <h2 class="section-title reveal reveal-d1"><span data-i18n="val_t1">What Drives</span> <span class="highlight" data-i18n="val_t2">Everything We Build</span></h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card reveal reveal-d1 tilt-card"><div class="v-glow"></div><span class="v-icon">🧭</span><h4 data-i18n="val1_t">Trust First</h4><p data-i18n="val1_d">Every venture is built on verified identity, transparent reputation, and reliable dispute resolution.</p></div>
+        <div class="value-card reveal reveal-d2 tilt-card"><div class="v-glow"></div><span class="v-icon">📋</span><h4 data-i18n="val2_t">Evidence Over Opinion</h4><p data-i18n="val2_d">No decision is made on enthusiasm alone. Stage-gates govern every resource allocation.</p></div>
+        <div class="value-card reveal reveal-d3 tilt-card"><div class="v-glow"></div><span class="v-icon">🤝</span><h4 data-i18n="val3_t">Human-Centered</h4><p data-i18n="val3_d">Technology exists to serve people, not replace them.</p></div>
+        <div class="value-card reveal reveal-d4 tilt-card"><div class="v-glow"></div><span class="v-icon">🔄</span><h4 data-i18n="val4_t">Compound Advantage</h4><p data-i18n="val4_d">Shared infrastructure, cross-venture learning, and reusable core modules.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ventures -->
+  <section class="ventures" id="ventures">
+    <div class="container">
+      <div class="text-center">
+        <div class="section-label reveal"><span class="line"></span><span data-i18n="vent_label">Our Ventures</span></div>
+        <h2 class="section-title reveal reveal-d1"><span data-i18n="vent_t1">Serving Different</span> <span class="highlight" data-i18n="vent_t2">Parts of Life</span></h2>
+        <p class="section-sub mx-auto reveal reveal-d2 drop-cap" data-i18n="vent_desc">Each venture operates in a distinct real-life experience market, guided by shared parent-company discipline.</p>
+      </div>
+      <div class="ventures-grid">
+        <venture-card class="venture-card cp reveal reveal-d1 tilt-card" data-venture="poselane"><span class="vn">01</span><span class="tag tp" data-i18n="vent1_tag">Active Validation</span><h3>PoseLane</h3><p data-i18n="vent1_desc">A creative services marketplace connecting verified talent with vetted clients.</p></venture-card>
+        <venture-card class="venture-card ce reveal reveal-d2 tilt-card" data-venture="eatcue"><span class="vn">02</span><span class="tag te" data-i18n="vent2_tag">Research Phase</span><h3>EatCue</h3><p data-i18n="vent2_desc">Decision intelligence for dining and food experiences.</p></venture-card>
+        <venture-card class="venture-card cc reveal reveal-d3 tilt-card" data-venture="caretrip"><span class="vn">03</span><span class="tag tcr" data-i18n="vent3_tag">Research Phase</span><h3>CareTrip</h3><p data-i18n="vent3_desc">Coordination and trust platform for non-clinical care journeys.</p></venture-card>
+        <venture-card class="venture-card cs reveal reveal-d4 tilt-card" data-venture="studybase"><span class="vn">04</span><span class="tag ts" data-i18n="vent4_tag">Research Phase</span><h3>StudyBase</h3><p data-i18n="vent4_desc">AI-supported foundational learning platform.</p></venture-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <timeline-section>
+    <section class="timeline-section" id="timeline">
+      <div class="container">
+        <div class="text-center">
+          <div class="section-label reveal"><span class="line"></span><span data-i18n="tl_label">Our Journey</span></div>
+          <h2 class="section-title reveal reveal-d1"><span data-i18n="tl_t1">Building the</span> <span class="highlight" data-i18n="tl_t2">Future of Experiences</span></h2>
+        </div>
+        <div class="timeline">
+          <div class="tl-item" data-delay="0"><div class="tl-dot"></div><div class="tl-content"><h4>Foundation</h4><p>LifeGex Strategic Charter established.</p></div></div>
+          <div class="tl-item" data-delay="1"><div class="tl-dot"></div><div class="tl-content"><h4>PoseLane Activation</h4><p>First subsidiary venture activated.</p></div></div>
+          <div class="tl-item" data-delay="2"><div class="tl-dot"></div><div class="tl-content"><h4>Core Infrastructure</h4><p>Shared core modules emerge from validated workflows.</p></div></div>
+          <div class="tl-item" data-delay="3"><div class="tl-dot"></div><div class="tl-content"><h4>Portfolio Expansion</h4><p>EatCue, CareTrip, and StudyBase progress through research gates.</p></div></div>
+        </div>
+      </div>
+    </section>
+  </timeline-section>
+
+  <!-- Funds -->
+  <funds-section>
+    <section class="funds" id="funds">
+      <div class="container">
+        <div class="text-center">
+          <div class="section-label reveal"><span class="line"></span><span data-i18n="funds_label">Use of Funds</span></div>
+          <h2 class="section-title reveal reveal-d1"><span data-i18n="funds_t1">Deploying Capital</span> <span class="highlight" data-i18n="funds_t2">for Maximum Impact</span></h2>
+        </div>
+        <div class="funds-grid">
+          <div class="funds-card reveal reveal-d1">
+            <div class="funds-bar"><div class="funds-bar-fill" style="width:35%"></div></div>
+            <div class="f-pct">35%</div><h4 data-i18n="funds1_t">Product & Engineering</h4><p data-i18n="funds1_d">Build the shared core platform modules.</p>
+          </div>
+          <div class="funds-card reveal reveal-d2">
+            <div class="funds-bar"><div class="funds-bar-fill" style="width:30%"></div></div>
+            <div class="f-pct">30%</div><h4 data-i18n="funds2_t">Market Validation</h4><p data-i18n="funds2_d">Fund manual MVP operations for PoseLane.</p>
+          </div>
+          <div class="funds-card reveal reveal-d3">
+            <div class="funds-bar"><div class="funds-bar-fill" style="width:20%"></div></div>
+            <div class="f-pct">20%</div><h4 data-i18n="funds3_t">Governance</h4><p data-i18n="funds3_d">Stage-gate system, evidence tracking, audit protocols.</p>
+          </div>
+          <div class="funds-card reveal reveal-d4">
+            <div class="funds-bar"><div class="funds-bar-fill" style="width:15%"></div></div>
+            <div class="f-pct">15%</div><h4 data-i18n="funds4_t">Operations</h4><p data-i18n="funds4_d">Build the lean parent company team.</p>
+          </div>
+        </div>
+        <!-- Sunburst Chart (Task 45) -->
+        <sunburst-chart style="display:block;max-width:400px;margin:48px auto 0">
+          <canvas data-values='[{"label":"Product","value":35},{"label":"Validation","value":30},{"label":"Governance","value":20},{"label":"Operations","value":15}]'></canvas>
+        </sunburst-chart>
+      </div>
+    </section>
+  </funds-section>
+
+  <!-- Metrics -->
+  <metrics-counter>
+    <section class="metrics" id="metrics">
+      <div class="container">
+        <div class="metrics-grid">
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="50">0</span><span class="metric-suffix">M+</span></div><div class="metric-label">Market Size</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="4">0</span></div><div class="metric-label">Active Ventures</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="100">0</span><span class="metric-suffix">%</span></div><div class="metric-label">Evidence-Based</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="2024">0</span></div><div class="metric-label">Founded</div></div>
+        </div>
+      </div>
+    </section>
+  </metrics-counter>
+
+  <!-- Testimonials -->
+  <coverflow-carousel>
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <div class="text-center">
+          <div class="section-label reveal"><span class="line"></span><span>Voices</span></div>
+          <h2 class="section-title reveal reveal-d1">What <span class="highlight">People Say</span></h2>
+        </div>
+        <div class="carousel-3d">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-card"><div class="quote">"LifeGex approach to venture building is fundamentally different."</div><div class="author"><div class="author-avatar">TH</div><div class="author-info"><div class="name">Thomas H.</div><div class="role">Investor</div></div></div></div>
+            <div class="carousel-card"><div class="quote">"The stage-gate system ensures capital is never wasted."</div><div class="author"><div class="author-avatar">SK</div><div class="author-info"><div class="name">Sarah K.</div><div class="role">Advisor</div></div></div></div>
+            <div class="carousel-card"><div class="quote">"Shared infrastructure across ventures is a game changer."</div><div class="author"><div class="author-avatar">MJ</div><div class="author-info"><div class="name">Marcus J.</div><div class="role">Partner</div></div></div></div>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button id="carouselPrev" aria-label="Previous" onclick="document.querySelector('coverflow-carousel').querySelector('#carouselPrev')?.click()">←</button>
+          <button id="carouselNext" aria-label="Next" onclick="document.querySelector('coverflow-carousel').querySelector('#carouselNext')?.click()">→</button>
+        </div>
+        <div class="carousel-dots" id="carouselDots">
+          <span class="active" role="button" tabindex="0"></span>
+          <span role="button" tabindex="0"></span>
+          <span role="button" tabindex="0"></span>
+        </div>
+      </div>
+    </section>
+  </coverflow-carousel>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <h2 class="reveal"><span data-i18n="cta_t1">Invest in the</span><br><span class="highlight" data-i18n="cta_t2">Future of Experiences</span></h2>
+      <p data-i18n="cta_desc">LifeGex is opening its first funding round. Join us in building the operating system for human experiences.</p>
+      <a href="#" class="btn btn-primary" data-i18n="cta_btn">Request Deck</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="logo"><span class="logo-text">LifeGex</span></div>
+      <p class="footer-domain" data-i18n="footer_tag">Parent Company. Venture System. Experience OS.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Twitter">𝕏</a>
+        <a href="#" aria-label="Email">✉</a>
+      </div>
+      <div class="footer-bottom"><p>© 2024 LifeGex. <span data-i18n="footer_rights">All rights reserved.</span></p></div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <back-to-top class="back-to-top" aria-label="Back to top">↑</back-to-top>
+
+  <!-- Command Palette (Task 40) -->
+  <command-palette class="command-palette">
+    <div class="command-overlay"></div>
+    <div class="command-modal" role="dialog" aria-label="Command palette">
+      <input type="text" class="command-input" placeholder="Search actions..." aria-label="Search commands">
+      <div class="command-results" role="listbox"></div>
+    </div>
+  </command-palette>
+
+  <!-- Exit Intent (Task 44) -->
+  <exit-intent class="exit-intent" style="display:none">
+    <div class="exit-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9995;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s">
+      <div class="exit-modal" style="background:white;padding:48px;border-radius:24px;max-width:480px;text-align:center;transform:translateY(20px);opacity:0;transition:all 0.4s cubic-bezier(0.16,1,0.3,1)">
+        <h3 style="font-size:1.8rem;margin-bottom:12px">Stay Connected</h3>
+        <p style="color:rgba(26,26,26,0.55);margin-bottom:24px">Get updates on LifeGex ventures and investment opportunities.</p>
+        <button class="btn btn-primary exit-cta">Subscribe</button>
+        <button class="exit-close" style="display:block;margin:16px auto 0;background:none;border:none;color:rgba(26,26,26,0.45);cursor:pointer;font-size:0.85rem">No thanks</button>
+      </div>
+    </div>
+  </exit-intent>
+
+  <!-- Drag Reorder (Task 41) — hidden by default -->
+  <drag-reorder class="drag-reorder" style="display:none"></drag-reorder>
+
+  <script>
+    // Minimal global helpers for inline event handlers
+    window.setLang = (locale) => {
+      import('data:text/javascript;base64,LyogVGFzayAyOS0zMDogaTE4biBFbmdpbmUgKyBNYWNoaW5lIFRyYW5zbGF0aW9uIEZhbGxiYWNrIChUYXNrIDM0KSAqLwppbXBvcnQgeyBjb25maWcgfSBmcm9tICcuL2NvbmZpZy5qcyc7CmltcG9ydCB7IHN0b3JlIH0gZnJvbSAnLi4vc3RhdGUvc3RvcmUuanMnOwoKY2xhc3MgSTE4bkVuZ2luZSB7CiAgI2xvY2FsZSA9ICdlbic7CiAgI3RyYW5zbGF0aW9ucyA9IG5ldyBNYXAoKTsKICAjZmFsbGJhY2tzID0gbmV3IE1hcCgpOwogICNsb2FkZWQgPSBuZXcgU2V0KCk7CiAgI2xpc3RlbmVycyA9IG5ldyBNYXAoKTsKICAjcGVuZGluZyA9IG5ldyBNYXAoKTsKCiAgY29uc3RydWN0b3IoKSB7CiAgICB0aGlzLiNsb2NhbGUgPSBsb2NhbFN0b3JhZ2UuZ2V0SXRlbShjb25maWcuc3RvcmFnZS5sb2NhbGUpIHx8ICdlbic7CiAgfQoKICBnZXQgbG9jYWxlKCkgeyByZXR1cm4gdGhpcy4jbG9jYWxlOyB9CgogIGFzeW5jIGluaXQoKSB7CiAgICBhd2FpdCB0aGlzLiNsb2FkTG9jYWxlKHRoaXMuI2xvY2FsZSk7CiAgICBkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQubGFuZyA9IHRoaXMuI2xvY2FsZTsKICAgIHRoaXMuI2FwcGx5VHJhbnNsYXRpb25zKCk7CiAgICB0aGlzLiNvYnNlcnZlRHluYW1pYygpOwogIH0KCiAgYXN5bmMgc2V0TG9jYWxlKGxvY2FsZSkgewogICAgaWYgKGxvY2FsZSA9PT0gdGhpcy4jbG9jYWxlKSByZXR1cm47CiAgICBjb25zdCBwcmV2ID0gdGhpcy4jbG9jYWxlOwogICAgdGhpcy4jbG9jYWxlID0gbG9jYWxlOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oY29uZmlnLnN0b3JhZ2UubG9jYWxlLCBsb2NhbGUpOwogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LmxhbmcgPSBsb2NhbGU7CiAgICBpZiAoIXRoaXMuI2xvYWRlZC5oYXMobG9jYWxlKSkgYXdhaXQgdGhpcy4jbG9hZExvY2FsZShsb2NhbGUpOwogICAgdGhpcy4jYXBwbHlUcmFuc2xhdGlvbnMoKTsKICAgIHRoaXMuI2VtaXQoJ2NoYW5nZScsIHsgbG9jYWxlLCBwcmV2IH0pOwogIH0KCiAgYXN5bmMgI2xvYWRMb2NhbGUobG9jYWxlKSB7CiAgICBpZiAodGhpcy4jbG9hZGVkLmhhcyhsb2NhbGUpIHx8IHRoaXMuI3BlbmRpbmcuaGFzKGxvY2FsZSkpIHJldHVybjsKICAgIHRoaXMuI3BlbmRpbmcuc2V0KGxvY2FsZSwgdHJ1ZSk7CiAgICB0cnkgewogICAgICBjb25zdCBtb2QgPSBhd2FpdCBpbXBvcnQoYC4uL2kxOG4vJHtsb2NhbGV9Lmpzb25gKTsKICAgICAgdGhpcy4jdHJhbnNsYXRpb25zLnNldChsb2NhbGUsIG1vZC5kZWZhdWx0IHx8IG1vZCk7CiAgICAgIHRoaXMuI2xvYWRlZC5hZGQobG9jYWxlKTsKICAgIH0gY2F0Y2ggewogICAgICBjb25zb2xlLndhcm4oYFtpMThuXSAke2xvY2FsZX0gbm90IGZvdW5kLCB0cnlpbmcgZmFsbGJhY2tgKTsKICAgICAgLy8gVGFzayAzNDogTWFjaGluZSB0cmFuc2xhdGlvbiBmYWxsYmFjawogICAgICBpZiAoY29uZmlnLmFwaS50cmFuc2xhdGlvbikgewogICAgICAgIHRyeSB7CiAgICAgICAgICBjb25zdCByZXMgPSBhd2FpdCBmZXRjaChjb25maWcuYXBpLnRyYW5zbGF0aW9uLCB7CiAgICAgICAgICAgIG1ldGhvZDogJ1BPU1QnLAogICAgICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicsICdYLUFQSS1LZXknOiBjb25maWcuYXBpLnRyYW5zbGF0aW9uS2V5IH0sCiAgICAgICAgICAgIGJvZHk6IEpTT04uc3RyaW5naWZ5KHsgZnJvbTogJ2VuJywgdG86IGxvY2FsZSwgdGV4dDogQXJyYXkuZnJvbSh0aGlzLiNmYWxsYmFja3Mua2V5cygpKSB9KSwKICAgICAgICAgIH0pOwogICAgICAgICAgaWYgKHJlcy5vaykgewogICAgICAgICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzLmpzb24oKTsKICAgICAgICAgICAgY29uc3QgbWFwID0ge307CiAgICAgICAgICAgIHRoaXMuI2ZhbGxiYWNrcy5mb3JFYWNoKCh2LCBrKSA9PiB7IG1hcFtrXSA9IGRhdGEudHJhbnNsYXRpb25zPy5ba10gfHwgdjsgfSk7CiAgICAgICAgICAgIHRoaXMuI3RyYW5zbGF0aW9ucy5zZXQobG9jYWxlLCBtYXApOwogICAgICAgICAgfQogICAgICAgIH0gY2F0Y2ggeyAvKiBzaWxlbnQgKi8gfQogICAgICB9CiAgICAgIGlmICghdGhpcy4jdHJhbnNsYXRpb25zLmhhcyhsb2NhbGUpKSB7CiAgICAgICAgdGhpcy4jdHJhbnNsYXRpb25zLnNldChsb2NhbGUsIHt9KTsKICAgICAgfQogICAgICB0aGlzLiNsb2FkZWQuYWRkKGxvY2FsZSk7CiAgICB9IGZpbmFsbHkgewogICAgICB0aGlzLiNwZW5kaW5nLmRlbGV0ZShsb2NhbGUpOwogICAgfQogIH0KCiAgdChrZXksIHBhcmFtcyA9IHt9KSB7CiAgICBsZXQgdmFsID0gdGhpcy4jdHJhbnNsYXRpb25zLmdldCh0aGlzLiNsb2NhbGUpPy5ba2V5XTsKICAgIGlmICghdmFsKSB2YWwgPSB0aGlzLiNmYWxsYmFja3MuZ2V0KGtleSkgfHwga2V5OwogICAgaWYgKHBhcmFtcykgewogICAgICBmb3IgKGNvbnN0IFtrLCB2XSBvZiBPYmplY3QuZW50cmllcyhwYXJhbXMpKSB7CiAgICAgICAgdmFsID0gdmFsLnJlcGxhY2UoYHske2t9fWAsIHYpOwogICAgICB9CiAgICB9CiAgICByZXR1cm4gdmFsOwogIH0KCiAgI2FwcGx5VHJhbnNsYXRpb25zKCkgewogICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnW2RhdGEtaTE4bl0nKS5mb3JFYWNoKGVsID0+IHsKICAgICAgY29uc3Qga2V5ID0gZWwuZGF0YXNldC5pMThuOwogICAgICBpZiAoIXRoaXMuI2ZhbGxiYWNrcy5oYXMoa2V5KSkgdGhpcy4jZmFsbGJhY2tzLnNldChrZXksIGVsLnRleHRDb250ZW50KTsKICAgICAgZWwudGV4dENvbnRlbnQgPSB0aGlzLnQoa2V5KTsKICAgIH0pOwogICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnW2RhdGEtaTE4bi1wbGFjZWhvbGRlcl0nKS5mb3JFYWNoKGVsID0+IHsKICAgICAgZWwucGxhY2Vob2xkZXIgPSB0aGlzLnQoZWwuZGF0YXNldC5pMThuUGxhY2Vob2xkZXIpOwogICAgfSk7CiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCdbZGF0YS1pMThuLWFsdF0nKS5mb3JFYWNoKGVsID0+IHsKICAgICAgZWwuYWx0ID0gdGhpcy50KGVsLmRhdGFzZXQuaTE4bkFsdCk7CiAgICB9KTsKICB9CgogICNvYnNlcnZlRHluYW1pYygpIHsKICAgIGNvbnN0IG9icyA9IG5ldyBNdXRhdGlvbk9ic2VydmVyKCgpID0+IHRoaXMuI2FwcGx5VHJhbnNsYXRpb25zKCkpOwogICAgb2JzLm9ic2VydmUoZG9jdW1lbnQuYm9keSwgeyBjaGlsZExpc3Q6IHRydWUsIHN1YnRyZWU6IHRydWUgfSk7CiAgfQoKICBvbihldmVudCwgaGFuZGxlcikgewogICAgaWYgKCF0aGlzLiNsaXN0ZW5lcnMuaGFzKGV2ZW50KSkgdGhpcy4jbGlzdGVuZXJzLnNldChldmVudCwgbmV3IFNldCgpKTsKICAgIHRoaXMuI2xpc3RlbmVycy5nZXQoZXZlbnQpLmFkZChoYW5kbGVyKTsKICAgIHJldHVybiAoKSA9PiB0aGlzLiNsaXN0ZW5lcnMuZ2V0KGV2ZW50KT8uZGVsZXRlKGhhbmRsZXIpOwogIH0KCiAgI2VtaXQoZXZlbnQsIGRhdGEpIHsKICAgIGNvbnN0IGhhbmRsZXJzID0gdGhpcy4jbGlzdGVuZXJzLmdldChldmVudCk7CiAgICBpZiAoaGFuZGxlcnMpIHF1ZXVlTWljcm90YXNrKCgpID0+IHsKICAgICAgZm9yIChjb25zdCBoIG9mIGhhbmRsZXJzKSBoKGRhdGEpOwogICAgfSk7CiAgfQp9CgpleHBvcnQgY29uc3QgaTE4biA9IG5ldyBJMThuRW5naW5lKCk7Cg==').then(m => m.i18n.setLocale(locale));
+    };
+    window.toggleLang = () => {
+      document.getElementById('langDropdown')?.classList.toggle('show');
+    };
+    window.closeLang = () => {
+      document.getElementById('langDropdown')?.classList.remove('show');
+    };
+  </script>
+</body>
+</html>

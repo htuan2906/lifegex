@@ -1,0 +1,149 @@
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+@keyframes noise-drift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 0); }
+  30% { transform: translate(-5%, 5%); }
+  40% { transform: translate(0, 10%); }
+  50% { transform: translate(5%, 5%); }
+  60% { transform: translate(10%, 0); }
+  70% { transform: translate(5%, -5%); }
+  80% { transform: translate(0, -10%); }
+  90% { transform: translate(-5%, -5%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.6); }
+}
+
+@keyframes tl-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(163,31,52,0.15), 0 0 0 4px rgba(163,31,52,0); }
+  50% { box-shadow: 0 0 0 2px rgba(163,31,52,0.15), 0 0 0 8px rgba(163,31,52,0.06); }
+}
+
+@keyframes loader-pulse {
+  0% { width: 0%; background-position: 0%; }
+  50% { width: 60%; background-position: 100%; }
+  100% { width: 100%; background-position: 0%; }
+}
+
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes page-exit {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== Scroll-driven animations (Task 16) ===== */
+@property --scroll-y {
+  syntax: '<number>';
+  initial-value: 0;
+  inherits: false;
+}
+
+/* ===== Text split animation classes ===== */
+.char-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em) rotateX(-20deg);
+  transition: all 0.6s var(--ease-smooth);
+}
+.char-reveal.visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition: all 0.7s var(--ease-smooth);
+}
+.word-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Card tilt classes (Task 17) ===== */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.tilt-card .tilt-content {
+  transform: translateZ(20px);
+  pointer-events: none;
+}
+.tilt-card .tilt-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tilt-card:hover .tilt-glow {
+  opacity: 1;
+}
+
+/* ===== Parallax layers (Task 19) ===== */
+.parallax-layer {
+  will-change: transform;
+  pointer-events: none;
+}
+.parallax-depth-0 { transform: translateZ(0); }
+.parallax-depth-1 { transform: translateZ(0.5px) scale(0.5); }
+.parallax-depth-2 { transform: translateZ(1px) scale(0.25); }
+.parallax-depth-3 { transform: translateZ(2px) scale(0.125); }
+
+/* ===== Morphing logo (Task 20) ===== */
+.logo-morphing {
+  transition: d 0.6s var(--ease-smooth);
+}
