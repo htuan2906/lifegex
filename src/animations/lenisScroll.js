@@ -1,5 +1,6 @@
 /* Task 18: Lenis Smooth Scroll Configuration */
 import Lenis from 'lenis';
+import { store } from '../state/store.js';
 
 class LenisScroll {
   #instance = null;
@@ -22,18 +23,17 @@ class LenisScroll {
 
     this.#instance.on('scroll', (e) => {
       store.set('scrollY', e.animatedScroll ?? e.scroll);
-      requestAnimationFrame(() => {
-        document.getElementById('navbar')?.classList.toggle('scrolled', e.scroll > 60);
-      });
+      document.getElementById('navbar')?.classList.toggle('scrolled', e.scroll > 60);
     });
 
     const raf = (time) => {
+      if (!this.#instance) return;
       this.#instance.raf(time);
       requestAnimationFrame(raf);
     };
     requestAnimationFrame(raf);
 
-    window.lenis = this.#instance;
+    store.set('lenis', this.#instance);
     return this.#instance;
   }
 

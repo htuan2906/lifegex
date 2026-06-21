@@ -2,8 +2,10 @@
 import { BaseComponent } from './BaseComponent.js';
 
 export class MetricsCounter extends BaseComponent {
+  #obs = null;
+
   mount() {
-    const obs = new IntersectionObserver((entries) => {
+    this.#obs = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (en.isIntersecting) {
           const el = en.target;
@@ -26,7 +28,11 @@ export class MetricsCounter extends BaseComponent {
       });
     }, { threshold: 0.5 });
 
-    this.$$('.count-to').forEach(el => obs.observe(el));
+    this.$$('.count-to').forEach(el => this.#obs.observe(el));
+  }
+
+  destroy() {
+    if (this.#obs) this.#obs.disconnect();
   }
 }
 

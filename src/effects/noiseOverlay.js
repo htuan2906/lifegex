@@ -12,7 +12,8 @@ class NoiseOverlay {
     this.#ctx = this.#canvas.getContext('2d');
     this.#resize();
     this.#generate();
-    window.addEventListener('resize', () => this.#resize());
+    this._resizeHandler = () => this.#resize();
+    window.addEventListener('resize', this._resizeHandler);
   }
 
   #createCanvas() {
@@ -58,6 +59,7 @@ class NoiseOverlay {
   destroy() {
     if (this.#raf) cancelAnimationFrame(this.#raf);
     this.#canvas?.remove();
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
   }
 }
 

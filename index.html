@@ -6,10 +6,37 @@
   <title>LifeGex — For Better Human Experiences</title>
   <meta name="description" content="LifeGex is a parent company and holding operating system that owns, governs, validates, and scales a portfolio of ventures dedicated to better human experiences.">
   <meta name="theme-color" content="#A31F34">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="LifeGex — For Better Human Experiences">
+  <meta property="og:description" content="A parent company building a portfolio of ventures that unlock a new asset class — trusted, technology-enabled human experiences.">
+  <meta property="og:url" content="https://lifegex.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LifeGex">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://lifegex.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LifeGex — For Better Human Experiences">
+  <meta name="twitter:description" content="A parent company building a portfolio of ventures that unlock a new asset class — trusted, technology-enabled human experiences.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lifegex.com; img-src 'self' data:; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="canonical" href="https://lifegex.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="modulepreload" href="/src/main.js">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "LifeGex",
+    "url": "https://lifegex.com",
+    "description": "For Better Human Experiences — A parent company building a portfolio of ventures that unlock a new asset class.",
+    "foundingDate": "2024",
+    "slogan": "For Better Human Experiences",
+    "knowsAbout": ["Venture Building", "Human Experiences", "Evidence-Based Investment"]
+  }
+  </script>
   <script type="module" src="/src/main.js"></script>
 </head>
 <body>
@@ -43,15 +70,15 @@
           </svg>
           <span class="logo-text">LifeGex</span>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
           <span></span><span></span><span></span>
         </button>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
           <li><a href="#about" data-i18n="nav_about">About</a></li>
           <li><a href="#ventures" data-i18n="nav_ventures">Ventures</a></li>
           <li><a href="#timeline" data-i18n="nav_timeline">Timeline</a></li>
           <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-          <li><theme-toggle id="themeToggle" title="Toggle dark mode">🌙</theme-toggle></li>
+          <li><button id="themeToggle" class="theme-toggle-btn" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button></li>
           <li>
             <div class="lang-selector">
               <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
@@ -59,11 +86,11 @@
                 <span class="arrow">▾</span>
               </button>
               <div class="lang-dropdown" id="langDropdown" role="listbox">
-                <button onclick="window.setLang?.('en')" data-lang="en" class="active" role="option"><span class="lang-flag">🇬🇧</span> English</button>
-                <button onclick="window.setLang?.('zh')" data-lang="zh" role="option"><span class="lang-flag">🇨🇳</span> 中文</button>
-                <button onclick="window.setLang?.('es')" data-lang="es" role="option"><span class="lang-flag">🇪🇸</span> Español</button>
-                <button onclick="window.setLang?.('fr')" data-lang="fr" role="option"><span class="lang-flag">🇫🇷</span> Français</button>
-                <button onclick="window.setLang?.('vi')" data-lang="vi" role="option"><span class="lang-flag">🇻🇳</span> Tiếng Việt</button>
+                <button data-lang="en" class="active" role="option"><span class="lang-flag">🇬🇧</span> English</button>
+                <button data-lang="zh" role="option"><span class="lang-flag">🇨🇳</span> 中文</button>
+                <button data-lang="es" role="option"><span class="lang-flag">🇪🇸</span> Español</button>
+                <button data-lang="fr" role="option"><span class="lang-flag">🇫🇷</span> Français</button>
+                <button data-lang="vi" role="option"><span class="lang-flag">🇻🇳</span> Tiếng Việt</button>
               </div>
             </div>
           </li>
@@ -159,10 +186,10 @@
           <h2 class="section-title reveal reveal-d1"><span data-i18n="tl_t1">Building the</span> <span class="highlight" data-i18n="tl_t2">Future of Experiences</span></h2>
         </div>
         <div class="timeline">
-          <div class="tl-item" data-delay="0"><div class="tl-dot"></div><div class="tl-content"><h4>Foundation</h4><p>LifeGex Strategic Charter established.</p></div></div>
-          <div class="tl-item" data-delay="1"><div class="tl-dot"></div><div class="tl-content"><h4>PoseLane Activation</h4><p>First subsidiary venture activated.</p></div></div>
-          <div class="tl-item" data-delay="2"><div class="tl-dot"></div><div class="tl-content"><h4>Core Infrastructure</h4><p>Shared core modules emerge from validated workflows.</p></div></div>
-          <div class="tl-item" data-delay="3"><div class="tl-dot"></div><div class="tl-content"><h4>Portfolio Expansion</h4><p>EatCue, CareTrip, and StudyBase progress through research gates.</p></div></div>
+          <div class="tl-item" data-delay="0"><div class="tl-dot"></div><div class="tl-content"><h4 data-i18n="tl_1_t">Foundation</h4><p data-i18n="tl_1_d">LifeGex Strategic Charter established.</p></div></div>
+          <div class="tl-item" data-delay="1"><div class="tl-dot"></div><div class="tl-content"><h4 data-i18n="tl_2_t">PoseLane Activation</h4><p data-i18n="tl_2_d">First subsidiary venture activated.</p></div></div>
+          <div class="tl-item" data-delay="2"><div class="tl-dot"></div><div class="tl-content"><h4 data-i18n="tl_3_t">Core Infrastructure</h4><p data-i18n="tl_3_d">Shared core modules emerge from validated workflows.</p></div></div>
+          <div class="tl-item" data-delay="3"><div class="tl-dot"></div><div class="tl-content"><h4 data-i18n="tl_4_t">Portfolio Expansion</h4><p data-i18n="tl_4_d">EatCue, CareTrip, and StudyBase progress through research gates.</p></div></div>
         </div>
       </div>
     </section>
@@ -207,10 +234,10 @@
     <section class="metrics" id="metrics">
       <div class="container">
         <div class="metrics-grid">
-          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="50">0</span><span class="metric-suffix">M+</span></div><div class="metric-label">Market Size</div></div>
-          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="4">0</span></div><div class="metric-label">Active Ventures</div></div>
-          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="100">0</span><span class="metric-suffix">%</span></div><div class="metric-label">Evidence-Based</div></div>
-          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="2024">0</span></div><div class="metric-label">Founded</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="50">0</span><span class="metric-suffix">M+</span></div><div class="metric-label" data-i18n="metric1">Market Size</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="4">0</span></div><div class="metric-label" data-i18n="metric2">Active Ventures</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="100">0</span><span class="metric-suffix">%</span></div><div class="metric-label" data-i18n="metric3">Evidence-Based</div></div>
+          <div class="metric-item"><div class="metric-number"><span class="count-to" data-target="2024">0</span></div><div class="metric-label" data-i18n="metric4">Founded</div></div>
         </div>
       </div>
     </section>
@@ -221,8 +248,8 @@
     <section class="testimonials" id="testimonials">
       <div class="container">
         <div class="text-center">
-          <div class="section-label reveal"><span class="line"></span><span>Voices</span></div>
-          <h2 class="section-title reveal reveal-d1">What <span class="highlight">People Say</span></h2>
+          <div class="section-label reveal"><span class="line"></span><span data-i18n="testi_label">Voices</span></div>
+          <h2 class="section-title reveal reveal-d1"><span data-i18n="testi_t1">What</span> <span class="highlight" data-i18n="testi_t2">People Say</span></h2>
         </div>
         <div class="carousel-3d">
           <div class="carousel-track" id="carouselTrack">
@@ -232,24 +259,29 @@
           </div>
         </div>
         <div class="carousel-nav">
-          <button id="carouselPrev" aria-label="Previous" onclick="document.querySelector('coverflow-carousel').querySelector('#carouselPrev')?.click()">←</button>
-          <button id="carouselNext" aria-label="Next" onclick="document.querySelector('coverflow-carousel').querySelector('#carouselNext')?.click()">→</button>
+          <button id="carouselPrev" aria-label="Previous">←</button>
+          <button id="carouselNext" aria-label="Next">→</button>
         </div>
         <div class="carousel-dots" id="carouselDots">
-          <span class="active" role="button" tabindex="0"></span>
-          <span role="button" tabindex="0"></span>
-          <span role="button" tabindex="0"></span>
+          <button class="active" aria-label="Slide 1"></button>
+          <button aria-label="Slide 2"></button>
+          <button aria-label="Slide 3"></button>
         </div>
       </div>
     </section>
   </coverflow-carousel>
 
-  <!-- CTA -->
+  <!-- CTA / Contact -->
   <section class="cta" id="contact">
     <div class="container">
       <h2 class="reveal"><span data-i18n="cta_t1">Invest in the</span><br><span class="highlight" data-i18n="cta_t2">Future of Experiences</span></h2>
       <p data-i18n="cta_desc">LifeGex is opening its first funding round. Join us in building the operating system for human experiences.</p>
-      <a href="#" class="btn btn-primary" data-i18n="cta_btn">Request Deck</a>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/xgvovkew" method="POST">
+        <input type="email" name="email" placeholder="Your email" required aria-label="Email address" class="contact-input">
+        <input type="text" name="interest" placeholder="Interest area (optional)" aria-label="Interest area" class="contact-input">
+        <button type="submit" class="btn btn-primary" data-i18n="cta_btn">Request Deck</button>
+        <p class="contact-feedback" id="contactFeedback" aria-live="polite" style="display:none"></p>
+      </form>
     </div>
   </section>
 
@@ -282,13 +314,13 @@
   </command-palette>
 
   <!-- Exit Intent (Task 44) -->
-  <exit-intent class="exit-intent" style="display:none">
+  <exit-intent class="exit-intent">
     <div class="exit-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9995;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s">
       <div class="exit-modal" style="background:white;padding:48px;border-radius:24px;max-width:480px;text-align:center;transform:translateY(20px);opacity:0;transition:all 0.4s cubic-bezier(0.16,1,0.3,1)">
-        <h3 style="font-size:1.8rem;margin-bottom:12px">Stay Connected</h3>
-        <p style="color:rgba(26,26,26,0.55);margin-bottom:24px">Get updates on LifeGex ventures and investment opportunities.</p>
-        <button class="btn btn-primary exit-cta">Subscribe</button>
-        <button class="exit-close" style="display:block;margin:16px auto 0;background:none;border:none;color:rgba(26,26,26,0.45);cursor:pointer;font-size:0.85rem">No thanks</button>
+        <h3 style="font-size:1.8rem;margin-bottom:12px" data-i18n="exit_title">Stay Connected</h3>
+        <p style="color:rgba(26,26,26,0.55);margin-bottom:24px" data-i18n="exit_desc">Get updates on LifeGex ventures and investment opportunities.</p>
+        <button class="btn btn-primary exit-cta" data-i18n="exit_btn">Subscribe</button>
+        <button class="exit-close" style="display:block;margin:16px auto 0;background:none;border:none;color:rgba(26,26,26,0.45);cursor:pointer;font-size:0.85rem" data-i18n="exit_close">No thanks</button>
       </div>
     </div>
   </exit-intent>
@@ -296,17 +328,26 @@
   <!-- Drag Reorder (Task 41) — hidden by default -->
   <drag-reorder class="drag-reorder" style="display:none"></drag-reorder>
 
+  <!-- Cookie Consent -->
+  <div class="cookie-consent" id="cookieConsent" role="dialog" aria-label="Cookie consent" style="display:none">
+    <p data-i18n="cookie_text">We use cookies to improve your experience. By continuing, you agree to our use of cookies.</p>
+    <button class="btn btn-primary cookie-accept" id="cookieAccept" data-i18n="cookie_btn">Accept</button>
+  </div>
+
   <script>
-    // Minimal global helpers for inline event handlers
     window.setLang = (locale) => {
       import('./src/utils/i18n.js').then(m => m.i18n.setLocale(locale));
     };
-    window.toggleLang = () => {
-      document.getElementById('langDropdown')?.classList.toggle('show');
-    };
-    window.closeLang = () => {
-      document.getElementById('langDropdown')?.classList.remove('show');
-    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem('lgx-cookie')) {
+        document.getElementById('cookieConsent').style.display = 'flex';
+      }
+      document.getElementById('cookieAccept')?.addEventListener('click', () => {
+        localStorage.setItem('lgx-cookie', '1');
+        document.getElementById('cookieConsent').style.display = 'none';
+      });
+    });
   </script>
 </body>
 </html>

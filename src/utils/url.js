@@ -49,7 +49,9 @@ class URLSynchronizer {
   }
 
   onChange(handler) {
-    window.addEventListener('urlsync', (e) => handler(e.detail));
+    const listener = (e) => handler(e.detail);
+    window.addEventListener('urlsync', listener);
+    return () => window.removeEventListener('urlsync', listener);
   }
 
   toObject() {

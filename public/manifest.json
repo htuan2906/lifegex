@@ -1,0 +1,14 @@
+{
+  "name": "LifeGex",
+  "short_name": "LifeGex",
+  "description": "For Better Human Experiences — A parent company building a portfolio of ventures that unlock a new asset class.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#A31F34",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

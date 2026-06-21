@@ -13,7 +13,8 @@ export class BaseComponent extends HTMLElement {
     if (customElements.get(tagName)) return;
     try {
       const mod = await import(modulePath);
-      BaseComponent.define(tagName, mod.default || Object.values(mod)[0]);
+      const cls = mod.default || Object.values(mod).find(v => typeof v === 'function' && v.prototype instanceof HTMLElement) || Object.values(mod)[0];
+      BaseComponent.define(tagName, cls);
     } catch (e) {
       console.warn(`[Component] Failed to load ${name}`, e);
     }
@@ -24,6 +25,8 @@ export class BaseComponent extends HTMLElement {
     this._mounted = false;
     this._handlers = [];
   }
+
+  static get observedAttributes() { return []; }
 
   connectedCallback() {
     if (this._mounted) return;

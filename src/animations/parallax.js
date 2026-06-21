@@ -14,7 +14,7 @@ class ParallaxEngine {
 
   #bind() {
     let ticking = false;
-    window.addEventListener('scroll', () => {
+    this._scrollHandler = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           const sy = window.scrollY;
@@ -27,7 +27,8 @@ class ParallaxEngine {
         });
         ticking = true;
       }
-    });
+    };
+    window.addEventListener('scroll', this._scrollHandler);
   }
 
   addLayer(el, speed = 0.3) {
@@ -39,6 +40,7 @@ class ParallaxEngine {
   destroy() {
     this.#layers.forEach(el => el.style.transform = '');
     this.#layers = [];
+    if (this._scrollHandler) window.removeEventListener('scroll', this._scrollHandler);
   }
 }
 

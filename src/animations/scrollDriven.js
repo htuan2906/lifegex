@@ -2,6 +2,7 @@
 class ScrollDrivenAnimations {
   #supports = CSS.supports('animation-timeline: scroll()');
   #elements = [];
+  #observer = null;
 
   init(root = document) {
     this.#elements = root.querySelectorAll('[data-scroll-drive]');
@@ -13,9 +14,16 @@ class ScrollDrivenAnimations {
   }
 
   #native() {
+    let sheet = document.styleSheets[0];
+    if (!sheet) {
+      const style = document.createElement('style');
+      document.head.appendChild(style);
+      this._sheet = style;
+      sheet = style.sheet || document.styleSheets[document.styleSheets.length - 1];
+    }
     this.#elements.forEach(el => {
       const prop = el.dataset.scrollDrive || 'progress';
-      document.styleSheets[0].insertRule(`
+      sheet.insertRule(`
         @keyframes ${prop}-${el.dataset.uid || Math.random().toString(36).slice(2)} {
           from { ${prop}: 0; }
           to { ${prop}: 1; }
@@ -41,12 +49,15 @@ class ScrollDrivenAnimations {
     };
 
     const obs = new IntersectionObserver(callback, { threshold: Array.from({ length: 20 }, (_, i) => i / 20) });
+    this.#observer = obs;
     this.#elements.forEach(el => obs.observe(el));
   }
 
   destroy() {
     this.#elements.forEach(el => el.style.transform = '');
     this.#elements = [];
+    if (this.#observer) this.#observer.disconnect();
+    if (this._sheet) document.head.removeChild(this._sheet);
   }
 }
 

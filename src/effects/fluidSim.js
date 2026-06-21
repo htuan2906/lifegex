@@ -18,7 +18,8 @@ class FluidSimulation {
     this.#createParticles(120);
     this.#bindMouse();
     this.#animate();
-    window.addEventListener('resize', () => this.#resize());
+    this._resizeHandler = () => this.#resize();
+    window.addEventListener('resize', this._resizeHandler);
   }
 
   #createCanvas() {
@@ -52,12 +53,13 @@ class FluidSimulation {
   }
 
   #bindMouse() {
-    document.addEventListener('mousemove', (e) => {
+    this._mouseHandler = (e) => {
       this.#mouse.px = this.#mouse.x;
       this.#mouse.py = this.#mouse.y;
       this.#mouse.x = e.clientX;
       this.#mouse.y = e.clientY;
-    });
+    };
+    document.addEventListener('mousemove', this._mouseHandler);
   }
 
   #animate() {
@@ -134,6 +136,8 @@ class FluidSimulation {
   destroy() {
     if (this.#raf) cancelAnimationFrame(this.#raf);
     this.#canvas?.remove();
+    if (this._mouseHandler) document.removeEventListener('mousemove', this._mouseHandler);
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
   }
 }
 

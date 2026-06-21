@@ -4,6 +4,8 @@ import { store } from '../state/store.js';
 import { a11y } from '../utils/a11y.js';
 
 export class CommandPalette extends BaseComponent {
+  #unsub = null;
+
   mount() {
     this.input = this.$('input');
     this.results = this.$('.command-results');
@@ -17,7 +19,7 @@ export class CommandPalette extends BaseComponent {
       { label: 'Go to About', action: '#about', icon: 'ℹ️' },
       { label: 'Go to Ventures', action: '#ventures', icon: '🚀' },
       { label: 'Go to Timeline', action: '#timeline', icon: '📅' },
-      { label: 'Go to Team', action: '#team', icon: '👥' },
+      { label: 'Go to Values', action: '#values', icon: '👥' },
       { label: 'Go to Contact', action: '#contact', icon: '📧' },
       { label: 'Toggle Dark Mode', action: 'theme', icon: '🌙' },
       { label: 'Change Language', action: 'lang', icon: '🌐' },
@@ -27,7 +29,7 @@ export class CommandPalette extends BaseComponent {
 
   #bindEvents() {
     // Toggle via store subscription
-    store.subscribe('commandOpen', (open) => {
+    this.#unsub = store.subscribe('commandOpen', (open) => {
       this.classList.toggle('open', open);
       if (open) {
         this.input?.focus();
@@ -86,7 +88,8 @@ export class CommandPalette extends BaseComponent {
     } else if (item.action.startsWith('#')) {
       const el = document.querySelector(item.action);
       if (el) {
-        if (window.lenis) window.lenis.scrollTo(el, { duration: 1.2 });
+        const lenis = store.get('lenis');
+        if (lenis) lenis.scrollTo(el, { duration: 1.2 });
         else el.scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -99,6 +102,11 @@ export class CommandPalette extends BaseComponent {
     const next = (idx + dir + items.length) % items.length;
     items[next]?.classList.add('active');
     items[next]?.scrollIntoView({ block: 'nearest' });
+  }
+
+  destroy() {
+    if (this.#unsub) this.#unsub();
+    this.#unsub = null;
   }
 }
 

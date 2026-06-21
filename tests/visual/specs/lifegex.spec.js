@@ -55,11 +55,11 @@ test.describe('LifeGex Visual Regression', () => {
     await expect(bars).toHaveCount(4);
   });
 
-  test('team cards visible', async ({ page }) => {
-    await page.locator('#team').scrollIntoViewIfNeeded();
+  test('values cards visible', async ({ page }) => {
+    await page.locator('#values').scrollIntoViewIfNeeded();
     await page.waitForTimeout(800);
-    const cards = page.locator('.team-card');
-    await expect(cards).toHaveCount(3);
+    const cards = page.locator('.value-card');
+    await expect(cards).toHaveCount(4);
   });
 
   test('metrics counters animate', async ({ page }) => {
@@ -92,7 +92,7 @@ test.describe('LifeGex Visual Regression', () => {
   });
 
   test('section screenshots', async ({ page }) => {
-    const sections = ['hero', 'about', 'values', 'ventures', 'timeline', 'funds', 'team', 'cta'];
+    const sections = ['hero', 'about', 'values', 'ventures', 'timeline', 'funds', 'cta'];
     for (const id of sections) {
       const el = page.locator(`#${id}`);
       if (await el.isVisible()) {

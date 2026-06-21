@@ -1,6 +1,7 @@
 /* Task 3 (enhanced): Three.js Background Particle System */
 import { config } from '../utils/config.js';
 import { store } from '../state/store.js';
+import * as THREE from 'three';
 
 class ParticleBackground {
   #scene = null;
@@ -9,11 +10,19 @@ class ParticleBackground {
   #points = null;
   #graphGroup = null;
   #raf = null;
+  #nodeMat = null;
+  #edgeMat = null;
+  #pm = null;
+  #gp = null;
+
+  #isLowPerf() {
+    return window.innerWidth < 768 || (navigator.hardwareConcurrency || 8) <= 4;
+  }
 
   init() {
-    if (!config.features.particles) return;
+    if (!config.features.particles || this.#isLowPerf()) return;
     const canvas = document.getElementById('three-canvas');
-    if (!canvas || typeof THREE === 'undefined') return;
+    if (!canvas) return;
 
     try {
       this.#scene = new THREE.Scene();
@@ -32,7 +41,7 @@ class ParticleBackground {
   }
 
   #createParticles() {
-    const gp = new THREE.BufferGeometry();
+    this.#gp = new THREE.BufferGeometry();
     const pc = 2000;
     const pos = new Float32Array(pc * 3);
     const sizes = new Float32Array(pc);
@@ -45,13 +54,13 @@ class ParticleBackground {
       pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
       sizes[i] = Math.random() * 2 + 0.5;
     }
-    gp.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    gp.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-    const pm = new THREE.PointsMaterial({
+    this.#gp.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    this.#gp.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    this.#pm = new THREE.PointsMaterial({
       color: 0xA31F34, size: 0.25, transparent: true,
       opacity: 0.4, blending: THREE.AdditiveBlending,
     });
-    this.#points = new THREE.Points(gp, pm);
+    this.#points = new THREE.Points(this.#gp, this.#pm);
     this.#scene.add(this.#points);
   }
 
@@ -59,8 +68,8 @@ class ParticleBackground {
     this.#graphGroup = new THREE.Group();
     const nodes = [];
     const gn = 50;
-    const nodeMat = new THREE.MeshBasicMaterial({ color: 0xB83A3A, transparent: true, opacity: 0.5 });
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0x6B1618, transparent: true, opacity: 0.08 });
+    this.#nodeMat = new THREE.MeshBasicMaterial({ color: 0xB83A3A, transparent: true, opacity: 0.5 });
+    this.#edgeMat = new THREE.LineBasicMaterial({ color: 0x6B1618, transparent: true, opacity: 0.08 });
 
     for (let i = 0; i < gn; i++) {
       const r = 18 + Math.random() * 28;
@@ -72,7 +81,7 @@ class ParticleBackground {
         r * Math.sin(phi) * Math.sin(theta)
       );
       nodes.push(v);
-      const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.12 + Math.random() * 0.18, 6, 6), nodeMat);
+      const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.12 + Math.random() * 0.18, 6, 6), this.#nodeMat);
       sphere.position.copy(v);
       this.#graphGroup.add(sphere);
     }
@@ -82,7 +91,7 @@ class ParticleBackground {
         const d = nodes[i].distanceTo(nodes[j]);
         if (d < 9) {
           const g = new THREE.BufferGeometry().setFromPoints([nodes[i], nodes[j]]);
-          this.#graphGroup.add(new THREE.Line(g, edgeMat));
+          this.#graphGroup.add(new THREE.Line(g, this.#edgeMat));
         }
       }
     }
@@ -102,16 +111,18 @@ class ParticleBackground {
 
   #bindMouse() {
     let mx = 0, my = 0;
-    document.addEventListener('mousemove', (e) => {
+    this._mouseHandler = (e) => {
       mx = (e.clientX / window.innerWidth - 0.5) * 2;
       my = -(e.clientY / window.innerHeight - 0.5) * 2;
-    });
+    };
+    document.addEventListener('mousemove', this._mouseHandler);
 
-    window.addEventListener('resize', () => {
+    this._resizeHandler = () => {
       this.#camera.aspect = window.innerWidth / window.innerHeight;
       this.#camera.updateProjectionMatrix();
       this.#renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    };
+    window.addEventListener('resize', this._resizeHandler);
   }
 
   #animate() {
@@ -133,7 +144,19 @@ class ParticleBackground {
   destroy() {
     if (this.#raf) cancelAnimationFrame(this.#raf);
     if (this.#renderer) this.#renderer.dispose();
+    if (this.#pm) this.#pm.dispose();
+    if (this.#gp) this.#gp.dispose();
+    if (this.#nodeMat) this.#nodeMat.dispose();
+    if (this.#edgeMat) this.#edgeMat.dispose();
+    if (this.#graphGroup) {
+      this.#graphGroup.children.forEach(child => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) child.material.dispose();
+      });
+    }
     this.#scene = null;
+    if (this._mouseHandler) document.removeEventListener('mousemove', this._mouseHandler);
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
   }
 }
 

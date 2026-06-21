@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lifegex.com/sitemap.xml

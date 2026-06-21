@@ -4,7 +4,6 @@ import { config } from '../utils/config.js';
 
 class TextSplitter {
   constructor() {
-    if (!config.features.textSplit) return;
     observerPool.create('textsplit', { threshold: 0.1, once: true });
   }
 

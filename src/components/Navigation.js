@@ -80,8 +80,9 @@ export class AppNavigation extends BaseComponent {
         const t = document.querySelector(h);
         if (!t) return;
         store.set('activeSection', h.replace('#', ''));
-        if (window.lenis) {
-          window.lenis.scrollTo(t, { duration: 1.2, offset: -68 });
+        const lenis = store.get('lenis');
+        if (lenis) {
+          lenis.scrollTo(t, { duration: 1.2, offset: -68 });
         } else {
           t.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -100,7 +101,10 @@ export class AppNavigation extends BaseComponent {
         if (window.scrollY >= t) cur = s.id;
       });
       this.$$('.nav-links a[href^="#"]').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+        const isActive = a.getAttribute('href') === '#' + cur;
+        a.classList.toggle('active', isActive);
+        if (isActive) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
       });
     });
   }

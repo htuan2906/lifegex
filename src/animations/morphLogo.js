@@ -10,10 +10,13 @@ class MorphLogo {
   #current = 'idle';
   #pathEl = null;
   #frameId = null;
+  #observer = null;
+  #cleanupFns = [];
 
   init(el) {
     this.#pathEl = el?.querySelector('path') || document.querySelector('.logo path');
     if (!this.#pathEl) return;
+    this.#cleanupFns = [];
     this.#bindEvents();
   }
 
@@ -21,11 +24,14 @@ class MorphLogo {
     const logo = this.#pathEl.closest('.logo');
     if (!logo) return;
 
-    logo.addEventListener('mouseenter', () => this.#transition('hover'));
-    logo.addEventListener('mouseleave', () => this.#transition('idle'));
+    const onEnter = () => this.#transition('hover');
+    const onLeave = () => this.#transition('idle');
+    logo.addEventListener('mouseenter', onEnter);
+    logo.addEventListener('mouseleave', onLeave);
+    this.#cleanupFns.push(() => { logo.removeEventListener('mouseenter', onEnter); logo.removeEventListener('mouseleave', onLeave); });
 
     let ticking = false;
-    window.addEventListener('scroll', () => {
+    const onScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
@@ -34,16 +40,18 @@ class MorphLogo {
         });
         ticking = true;
       }
-    });
+    };
+    window.addEventListener('scroll', onScroll);
+    this.#cleanupFns.push(() => window.removeEventListener('scroll', onScroll));
 
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
-      const obs = new MutationObserver(() => {
+      this.#observer = new MutationObserver(() => {
         if (document.body.classList.contains('dark')) {
           this.#pathEl.setAttribute('d', this.#paths.dark);
         }
       });
-      obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      this.#observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     }
   }
 
@@ -53,20 +61,49 @@ class MorphLogo {
     this.#animatePath(this.#paths[target]);
   }
 
+  destroy() {
+    if (this.#observer) this.#observer.disconnect();
+    if (this.#frameId) cancelAnimationFrame(this.#frameId);
+    if (this.#cleanupFns) this.#cleanupFns.forEach(fn => fn());
+  }
+
   #animatePath(targetD) {
     if (this.#frameId) cancelAnimationFrame(this.#frameId);
     const startD = this.#pathEl.getAttribute('d');
+    const startPoints = this.#parsePath(startD);
+    const targetPoints = this.#parsePath(targetD);
+    if (!startPoints || !targetPoints || startPoints.length !== targetPoints.length) {
+      this.#pathEl.setAttribute('d', targetD);
+      return;
+    }
     let t = 0;
     const dur = 300;
     const start = performance.now();
-
     const step = (now) => {
       t = Math.min((now - start) / dur, 1);
       const ease = 1 - Math.pow(1 - t, 3);
-      this.#pathEl.setAttribute('d', t < 1 ? startD : targetD);
+      const current = startPoints.map((sp, i) => {
+        const tp = targetPoints[i];
+        return sp.map((v, j) => v + (tp[j] - v) * ease);
+      });
+      this.#pathEl.setAttribute('d', this.#buildPath(current));
       if (t < 1) this.#frameId = requestAnimationFrame(step);
     };
     this.#frameId = requestAnimationFrame(step);
+  }
+
+  #parsePath(d) {
+    if (!d) return null;
+    const parts = d.match(/[ML]\s*[\d.-]+(\s*[\d.-]+)*/g);
+    if (!parts) return null;
+    return parts.map(p => {
+      const [cmd, ...nums] = p.trim().split(/\s+/);
+      return [cmd, ...nums.map(Number)];
+    });
+  }
+
+  #buildPath(points) {
+    return points.map(p => p.join(' ')).join(' ');
   }
 }
 

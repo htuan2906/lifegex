@@ -1,12 +1,13 @@
 /* Component: 3D Coverflow Carousel */
 import { BaseComponent } from './BaseComponent.js';
 import { GestureEngine } from '../utils/gestures.js';
+import gsap from 'gsap';
 
 export class CoverflowCarousel extends BaseComponent {
   mount() {
     this.track = this.$('#carouselTrack');
     this.cards = this.$$('.carousel-card');
-    this.dots = document.querySelectorAll('#carouselDots span');
+    this.dots = document.querySelectorAll('#carouselDots button');
     this.prevBtn = this.$('#carouselPrev');
     this.nextBtn = this.$('#carouselNext');
     this.idx = 0;
@@ -26,20 +27,15 @@ export class CoverflowCarousel extends BaseComponent {
       const x = diff * 140;
       const opacity = 1 - Math.abs(diff) * 0.35;
 
-      if (typeof gsap !== 'undefined') {
-        gsap.to(card, {
-          scale: Math.max(scale, 0.6),
-          x: Math.round(x),
-          z: Math.round(z),
-          opacity: Math.max(opacity, 0.3),
-          duration: 0.8,
-          ease: 'power3.out',
-          overwrite: 'auto',
-        });
-      } else {
-        card.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${scale})`;
-        card.style.opacity = opacity;
-      }
+      gsap.to(card, {
+        scale: Math.max(scale, 0.6),
+        x: Math.round(x),
+        z: Math.round(z),
+        opacity: Math.max(opacity, 0.3),
+        duration: 0.8,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
       card.style.pointerEvents = diff === 0 ? 'auto' : 'none';
     });
 
@@ -70,14 +66,25 @@ export class CoverflowCarousel extends BaseComponent {
   }
 
   #startAuto() {
+    if (this.autoTimer) clearInterval(this.autoTimer);
     this.autoTimer = setInterval(() => this.#next(), 5000);
-    this.on(this, 'mouseenter', () => clearInterval(this.autoTimer));
-    this.on(this, 'mouseleave', () => this.#startAuto());
+    // Only bind mouseleave once
+    if (!this._autoBound) {
+      this._autoBound = true;
+      this.on(this, 'mouseenter', () => { if (this.autoTimer) clearInterval(this.autoTimer); });
+      this.on(this, 'mouseleave', () => this.#startAuto());
+    }
   }
 
   #resetAuto() {
     clearInterval(this.autoTimer);
+    this.autoTimer = null;
     this.#startAuto();
+  }
+
+  destroy() {
+    if (this.autoTimer) clearInterval(this.autoTimer);
+    this._autoBound = false;
   }
 }
 

@@ -1,6 +1,7 @@
 /* Task 29-30: i18n Engine + Machine Translation Fallback (Task 34) */
 import { config } from './config.js';
 import { store } from '../state/store.js';
+import { urlSync } from './url.js';
 
 class I18nEngine {
   #locale = 'en';
@@ -9,9 +10,11 @@ class I18nEngine {
   #loaded = new Set();
   #listeners = new Map();
   #pending = new Map();
+  #observer = null;
 
   constructor() {
     this.#locale = localStorage.getItem(config.storage.locale) || 'en';
+    store.set('lang', this.#locale);
   }
 
   get locale() { return this.#locale; }
@@ -31,6 +34,7 @@ class I18nEngine {
     document.documentElement.lang = locale;
     if (!this.#loaded.has(locale)) await this.#loadLocale(locale);
     this.#applyTranslations();
+    try { urlSync.set('lang', locale); } catch {}
     this.#emit('change', { locale, prev });
   }
 
@@ -70,7 +74,7 @@ class I18nEngine {
 
   t(key, params = {}) {
     let val = this.#translations.get(this.#locale)?.[key];
-    if (!val) val = this.#fallbacks.get(key) || key;
+    if (!val) val = this.#fallbacks.get(key) || this.#translations.get('en')?.[key] || key;
     if (params) {
       for (const [k, v] of Object.entries(params)) {
         val = val.replace(`{${k}}`, v);
@@ -94,8 +98,13 @@ class I18nEngine {
   }
 
   #observeDynamic() {
-    const obs = new MutationObserver(() => this.#applyTranslations());
-    obs.observe(document.body, { childList: true, subtree: true });
+    this.#observer = new MutationObserver(() => this.#applyTranslations());
+    this.#observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  destroy() {
+    if (this.#observer) this.#observer.disconnect();
+    this.#observer = null;
   }
 
   on(event, handler) {

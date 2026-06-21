@@ -4,6 +4,7 @@ class StateMachine {
   #states;
   #history = [];
   #listeners = new Map();
+  #timer = null;
 
   constructor(config) {
     this.#states = config.states;
@@ -59,6 +60,11 @@ class StateMachine {
   is(...states) {
     return states.includes(this.#current);
   }
+
+  delayTransition(event, ms) {
+    if (this.#timer) clearTimeout(this.#timer);
+    this.#timer = setTimeout(() => { this.#timer = null; this.transition(event); }, ms);
+  }
 }
 
 export const appMachine = new StateMachine({
@@ -74,7 +80,7 @@ export const appMachine = new StateMachine({
     transitioning: {
       on: { DONE: 'idle', ERROR: 'error' },
       enter: () => {
-        setTimeout(() => appMachine.transition('DONE'), 1000);
+        appMachine.delayTransition('DONE', 1000);
       },
     },
     menu: {

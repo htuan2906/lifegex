@@ -25,11 +25,6 @@ body.dark .logo-text {
   -webkit-text-fill-color: transparent;
 }
 body.dark .hamburger span { background: #E8E6E6; }
-body.dark .lang-btn {
-  background: rgba(163, 31, 52, 0.06);
-  border-color: rgba(163, 31, 52, 0.1);
-  color: rgba(232, 230, 230, 0.5);
-}
 
 body.dark .section-title { color: #E8E6E6; }
 body.dark .section-sub { color: rgba(232, 230, 230, 0.5); }
@@ -61,11 +56,11 @@ body.dark .venture-card,
 body.dark .funds-card,
 body.dark .team-card,
 body.dark .platform-item,
-body.dark .carousel-card,
 body.dark .metric-item {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255,255,255,0.03);
   backdrop-filter: blur(12px);
-  border-color: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255,255,255,0.05);
   box-shadow: none;
 }
 
@@ -80,3 +75,89 @@ body.dark .funds-card p,
 body.dark .team-card p,
 body.dark .about-card p,
 body.dark .venture-card p { color: rgba(232, 230, 230, 0.4); }
+
+body.dark .carousel-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255,255,255,0.05);
+}
+
+body.dark .command-modal {
+  background: #1A1A1A;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+}
+body.dark .command-input {
+  border-bottom-color: rgba(255,255,255,0.06);
+  color: #E8E6E6;
+}
+body.dark .command-item {
+  color: rgba(232, 230, 230, 0.6);
+}
+body.dark .command-item:hover,
+body.dark .command-item.active {
+  background: rgba(163, 31, 52, 0.12);
+  color: #E8E6E6;
+}
+
+/* ===== Dark Mode UI Additions ===== */
+body.dark .lang-btn {
+  background: rgba(163,31,52,0.06);
+  border-color: rgba(163,31,52,0.1);
+  color: rgba(232,230,230,0.5);
+}
+
+body.dark .loader { background: #0A0A0A; }
+body.dark .loader-logo { color: #E8E6E6; }
+body.dark .page-transition { background: #0A0A0A; }
+body.dark .back-to-top { background: var(--red-dark); }
+body.dark .cursor-dot { background: var(--red-light); }
+body.dark .cursor-ring { border-color: var(--red-light); }
+
+body.dark .exit-modal { background: #1A1A1A; }
+
+body.dark sticky-nav-indicator {
+  background: rgba(10,10,10,0.85);
+  border-color: rgba(255,255,255,0.06);
+}
+
+body.dark .lang-dropdown { background: #1A1A1A; border-color: rgba(255,255,255,0.05); }
+body.dark .lang-dropdown button { color: rgba(232,230,230,0.6); }
+body.dark .lang-dropdown button:hover { background: rgba(163,31,52,0.12); color: #E8E6E6; }
+
+body.dark .carousel-card .quote { color: rgba(232,230,230,0.55); }
+body.dark .carousel-nav button { background: rgba(255,255,255,0.05); color: rgba(232,230,230,0.5); }
+body.dark .carousel-nav button:hover { background: var(--red); color: white; }
+body.dark .carousel-dots span { background: rgba(255,255,255,0.15); }
+
+body.dark .metric-number { color: #E8E6E6; }
+body.dark .tl-content h4 { color: #E8E6E6; }
+body.dark .tl-content p { color: rgba(232,230,230,0.5); }
+body.dark .author-info .name { color: #E8E6E6; }
+body.dark .drag-item { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); }
+
+body.dark .nav-links { background: #0A0A0A; }
+body.dark .nav-links a { color: rgba(232,230,230,0.6); border-bottom-color: rgba(255,255,255,0.05); }
+body.dark .nav-links a:hover { color: #E8E6E6; }
+
+body.dark .tp { background: rgba(26, 122, 90, 0.2); }
+body.dark .te { background: rgba(42, 106, 154, 0.2); }
+body.dark .tcr { background: rgba(163, 31, 52, 0.2); }
+body.dark .ts { background: rgba(184, 120, 32, 0.2); }
+
+body.dark .footer-social a { background: rgba(255,255,255,0.05); color: rgba(232,230,230,0.4); }
+body.dark .footer-social a:hover { background: var(--red); color: white; }
+
+body.dark .theme-toggle-btn:hover { background: rgba(163,31,52,0.15); }
+
+body.dark .contact-input {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+  color: #E8E6E6;
+}
+body.dark .contact-input:focus { border-color: var(--red); }
+
+body.dark .exit-modal { background: #1A1A1A; }
+body.dark .exit-modal h3 { color: #E8E6E6; }
+body.dark .exit-modal p { color: rgba(232,230,230,0.55); }
+body.dark .exit-close { color: rgba(232,230,230,0.45); }

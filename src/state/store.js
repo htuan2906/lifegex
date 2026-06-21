@@ -73,4 +73,5 @@ export const store = new Store({
   carouselIndex: 0,
   darkPreferred: matchMedia('(prefers-color-scheme: dark)').matches,
   reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
+  lenis: null,
 });

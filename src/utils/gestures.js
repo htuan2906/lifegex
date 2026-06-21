@@ -32,7 +32,7 @@ export class GestureEngine {
     };
 
     const onMove = (e) => {
-      e.preventDefault();
+      if (e.cancelable && e.touches) e.preventDefault();
       const t = e.touches?.[0] || e;
       const dx = t.clientX - startX;
       const dy = t.clientY - startY;
@@ -58,10 +58,13 @@ export class GestureEngine {
       const isFast = dt < 300 && dist > 30;
       if (isFast) {
         const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-        if (Math.abs(angle) > 30) this.#emit('swipeup');
-        if (Math.abs(angle) < -30) this.#emit('swipedown');
-        if (Math.abs(angle) < 30 && dx > 0) this.#emit('swiperight');
-        if (Math.abs(angle) < 30 && dx < 0) this.#emit('swipeleft');
+        if (Math.abs(angle) > 30) {
+          if (angle > 0) this.#emit('swipedown');
+          else this.#emit('swipeup');
+        } else {
+          if (dx > 0) this.#emit('swiperight');
+          else this.#emit('swipeleft');
+        }
       }
       if (dist < 10 && dt < 300) this.#emit('tap', { x: startX, y: startY });
       if (dist < 10 && dt > 500) this.#emit('longpress', { x: startX, y: startY });

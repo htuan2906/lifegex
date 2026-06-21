@@ -41,7 +41,7 @@ class Database {
     return new Promise((resolve, reject) => {
       const tx = this.#db.transaction(store, 'readonly');
       const req = tx.objectStore(store).get(key);
-      req.onsuccess = () => resolve(req.result?.value ?? req.result);
+      req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
   }
@@ -50,7 +50,10 @@ class Database {
     await this.#wait();
     return new Promise((resolve, reject) => {
       const tx = this.#db.transaction(store, 'readwrite');
-      const req = tx.objectStore(store).put({ key, value, timestamp: Date.now() });
+      const objStore = tx.objectStore(store);
+      const data = { value, timestamp: Date.now() };
+      data[objStore.keyPath] = key;
+      const req = objStore.put(data);
       req.onsuccess = () => resolve();
       req.onerror = () => reject(req.error);
     });
@@ -58,7 +61,7 @@ class Database {
 
   async cache(url, maxAge = 3600000) {
     const cached = await this.get('cache', url);
-    if (cached && Date.now() - cached.timestamp < maxAge) return cached.value;
+    if (cached && cached.value && Date.now() - cached.timestamp < maxAge) return cached.value;
     const res = await fetch(url);
     const data = await res.json();
     await this.set('cache', url, data);

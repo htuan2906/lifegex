@@ -3,8 +3,6 @@ const CACHE = 'lgx-v2';
 const PRECACHE = [
   '/',
   '/index.html',
-  '/src/styles/main.css',
-  '/src/main.js',
 ];
 
 self.addEventListener('install', (e) => {

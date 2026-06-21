@@ -2,12 +2,14 @@
 import { BaseComponent } from './BaseComponent.js';
 
 export class FundsSection extends BaseComponent {
+  #obs = null;
+
   mount() {
     this.#animateBars();
   }
 
   #animateBars() {
-    const obs = new IntersectionObserver((entries) => {
+    this.#obs = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (en.isIntersecting) {
           const bars = en.target.querySelectorAll('.funds-bar-fill');
@@ -22,7 +24,11 @@ export class FundsSection extends BaseComponent {
     }, { threshold: 0.3 });
 
     const grid = this.$('.funds-grid');
-    if (grid) obs.observe(grid);
+    if (grid) this.#obs.observe(grid);
+  }
+
+  destroy() {
+    if (this.#obs) this.#obs.disconnect();
   }
 }
 
@@ -33,12 +39,14 @@ export class SunburstChart extends BaseComponent {
   mount() {
     const canvas = this.$('canvas');
     if (!canvas || !canvas.dataset.values) return;
-    const values = JSON.parse(canvas.dataset.values);
+    let values;
+    try { values = JSON.parse(canvas.dataset.values); } catch { return; }
     this.#draw(canvas, values);
   }
 
   #draw(canvas, values) {
     const ctx = canvas.getContext('2d');
+    if (canvas.clientHeight === 0) canvas.style.height = '300px';
     const W = canvas.width = canvas.clientWidth * window.devicePixelRatio;
     const H = canvas.height = canvas.clientHeight * window.devicePixelRatio;
     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -75,7 +83,7 @@ export class SunburstChart extends BaseComponent {
       ctx.translate(cx + Math.cos(midAngle) * labelR, cy + Math.sin(midAngle) * labelR);
       ctx.rotate(midAngle > Math.PI / 2 && midAngle < Math.PI * 1.5 ? midAngle + Math.PI : midAngle);
       ctx.fillStyle = '#fff';
-      ctx.font = `bold ${12 * devicePixelRatio}px "Be Vietnam Pro"`;
+      ctx.font = `bold ${12 * window.devicePixelRatio}px "Be Vietnam Pro"`;
       ctx.textAlign = 'center';
       ctx.fillText(`${v.label} ${Math.round(v.value / total * 100)}%`, 0, 0);
       ctx.restore();

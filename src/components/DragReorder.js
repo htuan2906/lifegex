@@ -61,11 +61,13 @@ export class DragReorder extends BaseComponent {
     this.container.addEventListener('touchstart', onStart, { passive: true });
     document.addEventListener('touchmove', onMove, { passive: false });
     document.addEventListener('touchend', onEnd);
-
     this._handlers.push(() => {
       this.container.removeEventListener('mousedown', onStart);
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onEnd);
+      this.container.removeEventListener('touchstart', onStart);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
     });
   }
 
@@ -81,10 +83,9 @@ export class DragReorder extends BaseComponent {
     try {
       const order = JSON.parse(localStorage.getItem('lgx-drag-order'));
       if (!order) return;
-      const items = this.$$('.drag-item');
       const parent = this.container;
       order.forEach(id => {
-        const el = items.find(i => i.dataset.id === id);
+        const el = parent.querySelector(`[data-id="${id}"]`);
         if (el) parent.appendChild(el);
       });
     } catch {}

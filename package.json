@@ -9,24 +9,26 @@
     "preview": "vite preview",
     "lint": "eslint src/",
     "format": "prettier --write src/",
-    "test": "npx playwright test",
-    "test:visual": "npx playwright test tests/visual/",
+    "test": "vitest run && playwright test",
+    "test:unit": "vitest run --config vitest.config.js",
+    "test:visual": "playwright test tests/visual/",
     "subset:fonts": "node scripts/subset-fonts.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
-    "three": "^0.170.0",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.13"
+    "lenis": "^1.1.13",
+    "three": "^0.170.0"
   },
   "devDependencies": {
-    "vite": "^6.0.0",
+    "@playwright/test": "^1.44.0",
+    "cssnano": "^7.0.0",
+    "eslint": "^9.2.0",
     "postcss": "^8.4.38",
     "postcss-nesting": "^12.1.0",
-    "cssnano": "^7.0.0",
+    "prettier": "^3.3.0",
     "sharp": "^0.33.3",
-    "@playwright/test": "^1.44.0",
-    "eslint": "^9.2.0",
-    "prettier": "^3.3.0"
+    "vite": "^6.0.0",
+    "vitest": "^4.1.9"
   }
 }

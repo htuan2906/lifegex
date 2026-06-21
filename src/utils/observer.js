@@ -1,4 +1,5 @@
 /* Task 38: IntersectionObserver Pool Manager */
+import { store } from '../state/store.js';
 class ObserverPool {
   #observers = new Map();
   #entries = new Map();
@@ -51,9 +52,9 @@ class ObserverPool {
 
   async scrollIntoView(el, offset = 0) {
     return new Promise((resolve) => {
-      const { Lenis } = window;
-      if (Lenis?.isRunning) {
-        Lenis.scrollTo(el, { offset, duration: 1.2, onComplete: resolve });
+      const lenis = store.get('lenis');
+      if (lenis?.isRunning) {
+        lenis.scrollTo(el, { offset, duration: 1.2, onComplete: resolve });
       } else {
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: 'smooth' });

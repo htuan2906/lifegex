@@ -3,9 +3,10 @@ import { config } from '../utils/config.js';
 
 class CardTilt {
   #cards = [];
+  #gyroHandler = null;
 
   init(root = document) {
-    if (config.features.reducedMotion) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.#cards = root.querySelectorAll('.tilt-card');
     this.#cards.forEach(card => this.#enable(card));
     if (matchMedia('(pointer: coarse)').matches && window.DeviceOrientationEvent) {
@@ -14,7 +15,7 @@ class CardTilt {
   }
 
   #enable(card) {
-    card.addEventListener('mousemove', (e) => {
+    const onMove = (e) => {
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
@@ -38,30 +39,38 @@ class CardTilt {
           )
         `;
       }
-    });
+    };
 
-    card.addEventListener('mouseleave', () => {
+    const onLeave = () => {
       card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    });
+    };
+
+    card.addEventListener('mousemove', onMove);
+    card.addEventListener('mouseleave', onLeave);
+    card._tiltCleanup = () => {
+      card.removeEventListener('mousemove', onMove);
+      card.removeEventListener('mouseleave', onLeave);
+    };
   }
 
   #enableGyroscope() {
-    window.addEventListener('deviceorientation', (e) => {
+    this.#gyroHandler = (e) => {
       const tiltX = (e.beta || 0) * 0.1;
       const tiltY = (e.gamma || 0) * 0.1;
       this.#cards.forEach(card => {
-        card.style.transform = `
-          perspective(800px)
-          rotateX(${tiltX}deg)
-          rotateY(${tiltY}deg)
-        `;
+        card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
       });
-    }, true);
+    };
+    window.addEventListener('deviceorientation', this.#gyroHandler, true);
   }
 
   destroy() {
-    this.#cards.forEach(card => card.style.transform = '');
+    this.#cards.forEach(card => {
+      card.style.transform = '';
+      if (card._tiltCleanup) card._tiltCleanup();
+    });
     this.#cards = [];
+    if (this.#gyroHandler) window.removeEventListener('deviceorientation', this.#gyroHandler, true);
   }
 }
 

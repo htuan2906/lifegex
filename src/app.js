@@ -9,7 +9,6 @@ import { observerPool } from './utils/observer.js';
 import { urlSync } from './utils/url.js';
 import { a11y } from './utils/a11y.js';
 import { config } from './utils/config.js';
-import { debounce, throttle } from './utils/dom.js';
 
 import { lenisScroll } from './animations/lenisScroll.js';
 import { revealEngine } from './animations/reveal.js';
@@ -19,14 +18,13 @@ import { cardTilt } from './animations/cardTilt.js';
 import { morphLogo } from './animations/morphLogo.js';
 import { scrollDriven } from './animations/scrollDriven.js';
 import { flicTransition } from './animations/flicTransition.js';
-import { staggerEngine } from './animations/stagger.js';
 
 import { cursorFX } from './effects/cursor.js';
 import { particleBackground } from './effects/particles.js';
 import { fluidSim } from './effects/fluidSim.js';
 import { noiseOverlay } from './effects/noiseOverlay.js';
 import { ambientLight } from './effects/ambientLight.js';
-import { sparkleTrail } from './effects/ambientLight.js';
+import { sparkleTrail } from './effects/sparkleTrail.js';
 
 import './components/Navigation.js';
 import './components/HeroSection.js';
@@ -100,7 +98,7 @@ export class App {
     // Mark main content
     document.getElementById('main')?.setAttribute('role', 'main');
 
-    console.log(`[LifeGex] v${config.app.version} initialized`);
+    // console.log(`[LifeGex] v${config.app.version} initialized`);
   }
 
   #initScroll() {
@@ -135,9 +133,6 @@ export class App {
 
   #initComponents() {
     // Component-specific inits happen via Custom Elements automatically
-    document.querySelectorAll('[data-split]').forEach(el => {
-      textSplitter.split(el, { type: el.dataset.split });
-    });
   }
 
   #hideLoader() {
@@ -162,9 +157,12 @@ export class App {
     lenisScroll.destroy();
     particleBackground.destroy();
     noiseOverlay.destroy();
-    fluidSim.destroy();
+    try { fluidSim.destroy(); } catch {}
     ambientLight.destroy();
+    sparkleTrail.destroy();
     cursorFX.destroy();
+    i18n.destroy();
+    keyboard.destroy();
   }
 }
 

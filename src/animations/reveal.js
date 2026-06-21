@@ -52,14 +52,18 @@ class RevealEngine {
   }
 
   refresh() {
-    document.querySelectorAll('.reveal.show').forEach(el => {
+    const root = document;
+    root.querySelectorAll('.reveal.show').forEach(el => {
       el.classList.remove('show');
       el.style.opacity = '0';
       el.style.transform = 'translateY(30px)';
     });
-    this.#initObserver();
-    document.querySelectorAll('.reveal').forEach(el => {
-      observerPool.observe('reveal', el, (entry) => {
+    observerPool.create('reveal-refresh', {
+      threshold: this.#defaults.threshold,
+      once: false,
+    });
+    root.querySelectorAll('.reveal').forEach(el => {
+      observerPool.observe('reveal-refresh', el, (entry) => {
         if (entry.isIntersecting) el.classList.add('show');
       });
     });
