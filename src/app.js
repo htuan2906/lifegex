@@ -1,11 +1,9 @@
 /* Task 35: App orchestrator — initializes all subsystems */
 import { store } from './state/store.js';
 import { appMachine } from './state/machine.js';
-import { historyStack } from './state/history.js';
 import { i18n } from './utils/i18n.js';
 import { db } from './utils/db.js';
 import { keyboard } from './utils/keyboard.js';
-import { observerPool } from './utils/observer.js';
 import { urlSync } from './utils/url.js';
 import { a11y } from './utils/a11y.js';
 import { config } from './utils/config.js';
@@ -17,13 +15,8 @@ import { parallaxEngine } from './animations/parallax.js';
 import { cardTilt } from './animations/cardTilt.js';
 import { morphLogo } from './animations/morphLogo.js';
 import { scrollDriven } from './animations/scrollDriven.js';
-import { flicTransition } from './animations/flicTransition.js';
 
 import { cursorFX } from './effects/cursor.js';
-import { particleBackground } from './effects/particles.js';
-import { fluidSim } from './effects/fluidSim.js';
-import { noiseOverlay } from './effects/noiseOverlay.js';
-import { ambientLight } from './effects/ambientLight.js';
 import { sparkleTrail } from './effects/sparkleTrail.js';
 
 import './components/Navigation.js';
@@ -44,43 +37,26 @@ export class App {
     store.set('loading', true);
 
     try {
-      // Init DB
       try { await db.init(); } catch {}
-
-      // Init i18n
       try { await i18n.init(); } catch { console.warn('[LifeGex] i18n init failed'); }
       window.setLang = (locale) => i18n.setLocale(locale);
-
-      // Accessibility
       a11y.createSkipLink();
 
-      // Scroll
       if (!store.get('reducedMotion')) {
         this.#initScroll();
       }
-
-      // Visual effects
       this.#initEffects();
-
-      // Animations
       this.#initAnimations();
 
-      // Components
-      this.#initComponents();
-
-      // Service Worker
       if (config.features.serviceWorker) {
         this.#registerSW();
       }
 
-      // Keyboard shortcuts
       keyboard.register('Cmd+K', () => store.set('commandOpen', true));
       keyboard.register('Escape', () => {
         store.set('commandOpen', false);
         store.set('menuOpen', false);
       });
-
-      // URL sync
       urlSync.onChange((params) => {
         if (params.lang) i18n.setLocale(params.lang);
         if (params.section) {
@@ -88,37 +64,23 @@ export class App {
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }
       });
-
-      // State machine
       appMachine.transition('LOADED');
       store.set('loading', false);
       store.set('loaded', true);
-
-      // Mark main content
       document.getElementById('main')?.setAttribute('role', 'main');
-
-      // console.log(`[LifeGex] v${config.app.version} initialized`);
     } catch (e) {
       console.error('[LifeGex] Init error:', e);
     } finally {
-      // Always hide loader, even if init fails
       this.#hideLoader();
     }
   }
 
   #initScroll() {
-    try {
-      lenisScroll.init();
-    } catch (e) {
-      console.warn('[LifeGex] Lenis init failed, using native scroll', e);
-    }
+    try { lenisScroll.init(); } catch (e) { console.warn('[LifeGex] Lenis init failed, using native scroll', e); }
   }
 
   #initEffects() {
     try { cursorFX.init(); } catch (e) { console.warn('[LifeGex] cursorFX:', e); }
-    try { particleBackground.init(); } catch (e) { console.warn('[LifeGex] particles:', e); }
-    try { noiseOverlay.init(); } catch (e) { console.warn('[LifeGex] noise:', e); }
-    try { ambientLight.init(); } catch (e) { console.warn('[LifeGex] ambientLight:', e); }
     try { sparkleTrail.init(); } catch (e) { console.warn('[LifeGex] sparkleTrail:', e); }
     if (store.get('reducedMotion')) {
       cursorFX.disableTrail();
@@ -133,10 +95,6 @@ export class App {
     try { cardTilt.init(); } catch (e) { console.warn('[LifeGex] cardTilt:', e); }
     try { morphLogo.init(); } catch (e) { console.warn('[LifeGex] morphLogo:', e); }
     try { scrollDriven.init(); } catch (e) { console.warn('[LifeGex] scrollDriven:', e); }
-  }
-
-  #initComponents() {
-    // Component-specific inits happen via Custom Elements automatically
   }
 
   #hideLoader() {
@@ -159,10 +117,6 @@ export class App {
 
   destroy() {
     lenisScroll.destroy();
-    particleBackground.destroy();
-    noiseOverlay.destroy();
-    try { fluidSim.destroy(); } catch {}
-    ambientLight.destroy();
     sparkleTrail.destroy();
     cursorFX.destroy();
     i18n.destroy();
