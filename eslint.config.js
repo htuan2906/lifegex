@@ -24,6 +24,7 @@ export default [
         requestAnimationFrame: 'readonly',
         cancelAnimationFrame: 'readonly',
         IntersectionObserver: 'readonly',
+        ResizeObserver: 'readonly',
         MutationObserver: 'readonly',
         CustomEvent: 'readonly',
         matchMedia: 'readonly',

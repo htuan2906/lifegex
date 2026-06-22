@@ -25,9 +25,10 @@ class RevealEngine {
     if (items.length === 0) return;
 
     items.forEach((el, i) => {
+      if (el.classList.contains('reveal-ready')) return;
       const delay = el.dataset.delay
         ? parseInt(el.dataset.delay) * 100
-        : i * stagger;
+        : Math.min(i * stagger, 320);
       el.style.transitionDelay = `${delay}ms`;
       this.#setOrigin(el, origin);
       observerPool.observe('reveal', el, (entry) => {
@@ -46,9 +47,8 @@ class RevealEngine {
       right: 'translateX(30px)',
       scale: 'scale(0.95)',
     };
-    el.style.transform = transforms[origin] || transforms.bottom;
-    el.style.opacity = '0';
-    el.style.transition = `all 0.7s cubic-bezier(0.16, 1, 0.3, 1)`;
+    el.style.setProperty('--reveal-from', transforms[origin] || transforms.bottom);
+    el.classList.add('reveal-ready');
   }
 
   refresh() {

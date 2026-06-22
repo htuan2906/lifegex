@@ -19,6 +19,7 @@ class TextSplitter {
     if (translatedChildren.length > 0) {
       let offset = 0;
       translatedChildren.forEach((child) => {
+        if (child.classList.contains('gradient-text')) return;
         offset = this.#splitText(child, 'chars', stagger, offset);
       });
     } else {
