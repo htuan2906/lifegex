@@ -9,9 +9,11 @@ class TextSplitter {
 
   split(el, { type = 'chars', stagger = 30 } = {}) {
     if (!config.features.textSplit) return;
+    if (el.dataset.splitDone) return;
     const text = el.textContent.trim();
     if (!text) return;
 
+    el.dataset.splitDone = '1';
     el.textContent = '';
     const wrapper = document.createElement('span');
     wrapper.style.display = 'inline-block';

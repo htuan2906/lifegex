@@ -350,7 +350,7 @@
       var cc = document.getElementById('cookieConsent');
       if (cc && !localStorage.getItem('lgx-cookie')) cc.style.display = 'flex';
       document.getElementById('cookieAccept')?.addEventListener('click', function() {
-        localStorage.setItem('lgx-cookie', '1');
+        try { localStorage.setItem('lgx-cookie', '1'); } catch {}
         document.getElementById('cookieConsent').style.display = 'none';
       });
     });
