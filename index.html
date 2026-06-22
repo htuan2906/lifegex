@@ -24,7 +24,6 @@
   <link rel="canonical" href="https://lifegex.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="modulepreload" href="/src/main.js">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -336,23 +335,13 @@
 
   <script>
     window.setLang = function() {};
-
     setTimeout(function() {
-      var loader = document.getElementById('loader');
-      if (loader) {
-        loader.style.display = 'none';
-        var d = document.createElement('div');
-        d.id = 'dbg-fb';
-        d.style.cssText = 'position:fixed;bottom:10px;right:10px;background:red;color:#fff;z-index:999999;padding:6px 12px;border-radius:4px;font:12px sans-serif';
-        d.textContent = 'FB:' + Date.now();
-        document.body.appendChild(d);
-      }
-    }, 4000);
-
+      var el = document.getElementById('loader');
+      if (el) { el.style.display = 'none'; el.style.opacity = '0'; el.style.visibility = 'hidden'; }
+    }, 3000);
     document.addEventListener('DOMContentLoaded', function() {
-      if (!localStorage.getItem('lgx-cookie')) {
-        document.getElementById('cookieConsent').style.display = 'flex';
-      }
+      var cc = document.getElementById('cookieConsent');
+      if (cc && !localStorage.getItem('lgx-cookie')) cc.style.display = 'flex';
       document.getElementById('cookieAccept')?.addEventListener('click', function() {
         localStorage.setItem('lgx-cookie', '1');
         document.getElementById('cookieConsent').style.display = 'none';

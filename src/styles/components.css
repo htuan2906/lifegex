@@ -464,7 +464,11 @@ sticky-nav-indicator {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: var(--white); transition: opacity 0.6s;
 }
-.loader.hidden { opacity: 0; pointer-events: none; }
+.loader { animation: loader-ah 0.01s 4s forwards; }
+.loader.hidden { animation: none; opacity: 0; pointer-events: none; visibility: hidden; }
+@keyframes loader-ah {
+  to { opacity: 0; pointer-events: none; visibility: hidden; }
+}
 .loader-logo { font-size: var(--text-2xl); font-weight: 800; margin-bottom: var(--space-lg); }
 .loader-bar { width: 200px; height: 3px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
 .loader-bar-fill { height: 100%; background: var(--red); animation: loader-pulse 2s var(--ease-in-out) infinite; border-radius: 3px; }
