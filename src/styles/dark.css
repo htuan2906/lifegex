@@ -128,7 +128,7 @@ body.dark .lang-dropdown button:hover { background: rgba(163,31,52,0.12); color:
 body.dark .carousel-card .quote { color: rgba(232,230,230,0.55); }
 body.dark .carousel-nav button { background: rgba(255,255,255,0.05); color: rgba(232,230,230,0.5); }
 body.dark .carousel-nav button:hover { background: var(--red); color: white; }
-body.dark .carousel-dots span { background: rgba(255,255,255,0.15); }
+body.dark .carousel-dots button { background: rgba(255,255,255,0.15); }
 
 body.dark .metric-number { color: #E8E6E6; }
 body.dark .tl-content h4 { color: #E8E6E6; }

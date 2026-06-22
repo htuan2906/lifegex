@@ -17,7 +17,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LifeGex — For Better Human Experiences">
   <meta name="twitter:description" content="A parent company building a portfolio of ventures that unlock a new asset class — trusted, technology-enabled human experiences.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lifegex.com; img-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' data: 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lifegex.com; img-src 'self' data:; base-uri 'self'; form-action 'self' https://formspree.io">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="manifest" href="/manifest.json">
@@ -335,15 +335,25 @@
   </div>
 
   <script>
-    window.setLang = (locale) => {
-      import('./src/utils/i18n.js').then(m => m.i18n.setLocale(locale));
-    };
+    window.setLang = function() {};
 
-    document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(function() {
+      var loader = document.getElementById('loader');
+      if (loader) {
+        loader.style.display = 'none';
+        var d = document.createElement('div');
+        d.id = 'dbg-fb';
+        d.style.cssText = 'position:fixed;bottom:10px;right:10px;background:red;color:#fff;z-index:999999;padding:6px 12px;border-radius:4px;font:12px sans-serif';
+        d.textContent = 'FB:' + Date.now();
+        document.body.appendChild(d);
+      }
+    }, 4000);
+
+    document.addEventListener('DOMContentLoaded', function() {
       if (!localStorage.getItem('lgx-cookie')) {
         document.getElementById('cookieConsent').style.display = 'flex';
       }
-      document.getElementById('cookieAccept')?.addEventListener('click', () => {
+      document.getElementById('cookieAccept')?.addEventListener('click', function() {
         localStorage.setItem('lgx-cookie', '1');
         document.getElementById('cookieConsent').style.display = 'none';
       });

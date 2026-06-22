@@ -48,6 +48,7 @@ export class App {
 
     // Init i18n
     await i18n.init();
+    window.setLang = (locale) => i18n.setLocale(locale);
 
     // Accessibility
     a11y.createSkipLink();
@@ -110,25 +111,24 @@ export class App {
   }
 
   #initEffects() {
-    cursorFX.init();
-    particleBackground.init();
-    noiseOverlay.init();
-    ambientLight.init();
-    sparkleTrail.init();
+    try { cursorFX.init(); } catch (e) { console.warn('[LifeGex] cursorFX:', e); }
+    try { particleBackground.init(); } catch (e) { console.warn('[LifeGex] particles:', e); }
+    try { noiseOverlay.init(); } catch (e) { console.warn('[LifeGex] noise:', e); }
+    try { ambientLight.init(); } catch (e) { console.warn('[LifeGex] ambientLight:', e); }
+    try { sparkleTrail.init(); } catch (e) { console.warn('[LifeGex] sparkleTrail:', e); }
     if (store.get('reducedMotion')) {
       cursorFX.disableTrail();
       sparkleTrail.disable();
     }
-    // fluidSim.init(); // uncomment when needed
   }
 
   #initAnimations() {
-    revealEngine.observe(document);
-    textSplitter.splitAll(document);
-    parallaxEngine.init();
-    cardTilt.init();
-    morphLogo.init();
-    scrollDriven.init();
+    try { revealEngine.observe(document); } catch (e) { console.warn('[LifeGex] reveal:', e); }
+    try { textSplitter.splitAll(document); } catch (e) { console.warn('[LifeGex] textSplit:', e); }
+    try { parallaxEngine.init(); } catch (e) { console.warn('[LifeGex] parallax:', e); }
+    try { cardTilt.init(); } catch (e) { console.warn('[LifeGex] cardTilt:', e); }
+    try { morphLogo.init(); } catch (e) { console.warn('[LifeGex] morphLogo:', e); }
+    try { scrollDriven.init(); } catch (e) { console.warn('[LifeGex] scrollDriven:', e); }
   }
 
   #initComponents() {
