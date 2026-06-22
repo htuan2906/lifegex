@@ -76,6 +76,7 @@
 .tilt-card, .venture-card, .value-card, .about-card, .btn { touch-action: manipulation; }
 
 @media (max-width: 768px) {
+  .cursor-dot, .cursor-ring { display: none; }
   .hamburger { display: flex; }
   .nav-links {
     position: fixed; top: 68px; left: 0; right: 0; bottom: 0;

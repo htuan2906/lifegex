@@ -10,12 +10,15 @@ export const config = Object.freeze({
   },
   features: {
     darkMode: true,
-    smoothScroll: false,
-    cursorFX: false,
+    smoothScroll: !matchMedia('(prefers-reduced-motion: reduce)').matches,
+    cursorFX: !matchMedia('(prefers-reduced-motion: reduce)').matches
+      && !matchMedia('(pointer: coarse)').matches,
+    sparkleTrail: !matchMedia('(prefers-reduced-motion: reduce)').matches
+      && !matchMedia('(pointer: coarse)').matches,
     particles: false,
     fluidSim: false,
-    textSplit: false,
-    parallax: false,
+    textSplit: !matchMedia('(prefers-reduced-motion: reduce)').matches,
+    parallax: !matchMedia('(prefers-reduced-motion: reduce)').matches,
     dragReorder: false,
     commandPalette: true,
     exitIntent: false,

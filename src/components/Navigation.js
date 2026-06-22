@@ -61,10 +61,36 @@ export class AppNavigation extends BaseComponent {
 
   #bindLang() {
     if (!this.langBtn || !this.langDropdown) return;
+    const localeLabels = {
+      en: 'EN',
+      zh: '中文',
+      es: 'ES',
+      fr: 'FR',
+      vi: 'VI',
+    };
+
     this.on(this.langBtn, 'click', (e) => {
       e.stopPropagation();
       this.langDropdown.classList.toggle('show');
       a11y.setAriaExpanded(this.langBtn, this.langDropdown.classList.contains('show'));
+    });
+
+    this.$$('#langDropdown [data-lang]').forEach((option) => {
+      this.on(option, 'click', async (e) => {
+        e.stopPropagation();
+        const locale = option.dataset.lang;
+        if (!locale) return;
+        await window.setLang?.(locale);
+        const current = this.$('#langCurrent');
+        if (current) current.textContent = localeLabels[locale] || locale.toUpperCase();
+        this.$$('#langDropdown [data-lang]').forEach((item) => {
+          const active = item === option;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        this.langDropdown.classList.remove('show');
+        a11y.setAriaExpanded(this.langBtn, false);
+      });
     });
 
     this.on(document, 'click', () => this.langDropdown?.classList.remove('show'));

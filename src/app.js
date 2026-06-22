@@ -40,6 +40,12 @@ export class App {
       try { await db.init(); } catch {}
       try { await i18n.init(); } catch { console.warn('[LifeGex] i18n init failed'); }
       window.setLang = (locale) => i18n.setLocale(locale);
+      i18n.on('change', () => {
+        const heroTitle = document.getElementById('heroTitle');
+        if (!heroTitle) return;
+        delete heroTitle.dataset.splitDone;
+        textSplitter.split(heroTitle, { type: 'chars', stagger: 20 });
+      });
       a11y.createSkipLink();
 
       if (config.features.smoothScroll && !store.get('reducedMotion')) {
@@ -83,7 +89,7 @@ export class App {
     if (config.features.cursorFX) {
       try { cursorFX.init(); } catch (e) { console.warn('[LifeGex] cursorFX:', e); }
     }
-    if (config.features.particles) {
+    if (config.features.sparkleTrail) {
       try { sparkleTrail.init(); } catch (e) { console.warn('[LifeGex] sparkleTrail:', e); }
     }
     if (store.get('reducedMotion')) {
@@ -106,8 +112,8 @@ export class App {
       const loader = document.getElementById('loader');
       if (loader) loader.classList.add('hidden');
     };
-    window.addEventListener('load', () => setTimeout(hide, 800));
-    setTimeout(hide, 4000);
+    setTimeout(hide, 600);
+    setTimeout(hide, 3000);
     window.addEventListener('error', hide);
   }
 

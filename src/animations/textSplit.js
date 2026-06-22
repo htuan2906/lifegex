@@ -10,37 +10,21 @@ class TextSplitter {
   split(el, { type = 'chars', stagger = 30 } = {}) {
     if (!config.features.textSplit) return;
     if (el.dataset.splitDone) return;
-    const text = el.textContent.trim();
-    if (!text) return;
-
     el.dataset.splitDone = '1';
-    el.textContent = '';
-    const wrapper = document.createElement('span');
-    wrapper.style.display = 'inline-block';
 
-    if (type === 'chars') {
-      for (let i = 0; i < text.length; i++) {
-        const c = document.createElement('span');
-        c.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-        c.className = 'char-reveal';
-        c.style.transitionDelay = `${i * stagger}ms`;
-        wrapper.appendChild(c);
-      }
+    const translatedChildren = type === 'chars'
+      ? Array.from(el.querySelectorAll('[data-i18n]'))
+      : [];
+
+    if (translatedChildren.length > 0) {
+      let offset = 0;
+      translatedChildren.forEach((child) => {
+        offset = this.#splitText(child, 'chars', stagger, offset);
+      });
     } else {
-      const words = text.split(' ');
-      for (let i = 0; i < words.length; i++) {
-        const w = document.createElement('span');
-        w.textContent = words[i];
-        w.className = 'word-reveal';
-        w.style.transitionDelay = `${i * stagger}ms`;
-        wrapper.appendChild(w);
-        if (i < words.length - 1) {
-          wrapper.appendChild(document.createTextNode('\u00A0'));
-        }
-      }
+      this.#splitText(el, type, stagger);
     }
 
-    el.appendChild(wrapper);
     observerPool.observe('textsplit', el, (entry) => {
       if (entry.isIntersecting) {
         el.querySelectorAll('.char-reveal, .word-reveal').forEach(s => {
@@ -48,6 +32,40 @@ class TextSplitter {
         });
       }
     });
+  }
+
+  #splitText(el, type, stagger, offset = 0) {
+    const text = el.textContent.trim();
+    if (!text) return offset;
+
+    el.textContent = '';
+    const wrapper = document.createElement('span');
+    wrapper.style.display = 'inline-block';
+
+    if (type === 'chars') {
+      for (let i = 0; i < text.length; i++) {
+        const char = document.createElement('span');
+        char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+        char.className = 'char-reveal';
+        char.style.transitionDelay = `${(offset + i) * stagger}ms`;
+        wrapper.appendChild(char);
+      }
+      offset += text.length;
+    } else {
+      const words = text.split(' ');
+      for (let i = 0; i < words.length; i++) {
+        const word = document.createElement('span');
+        word.textContent = words[i];
+        word.className = 'word-reveal';
+        word.style.transitionDelay = `${(offset + i) * stagger}ms`;
+        wrapper.appendChild(word);
+        if (i < words.length - 1) wrapper.appendChild(document.createTextNode('\u00A0'));
+      }
+      offset += words.length;
+    }
+
+    el.appendChild(wrapper);
+    return offset;
   }
 
   splitAll(root, opts = {}) {
