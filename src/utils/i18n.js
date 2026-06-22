@@ -13,7 +13,11 @@ class I18nEngine {
   #observer = null;
 
   constructor() {
-    this.#locale = localStorage.getItem(config.storage.locale) || 'en';
+    try {
+      this.#locale = localStorage.getItem(config.storage.locale) || 'en';
+    } catch {
+      this.#locale = 'en';
+    }
     store.set('lang', this.#locale);
   }
 
@@ -30,7 +34,7 @@ class I18nEngine {
     if (locale === this.#locale) return;
     const prev = this.#locale;
     this.#locale = locale;
-    localStorage.setItem(config.storage.locale, locale);
+    try { localStorage.setItem(config.storage.locale, locale); } catch {}
     document.documentElement.lang = locale;
     if (!this.#loaded.has(locale)) await this.#loadLocale(locale);
     this.#applyTranslations();

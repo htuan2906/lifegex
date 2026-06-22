@@ -43,63 +43,67 @@ export class App {
   async init() {
     store.set('loading', true);
 
-    // Init DB
-    try { await db.init(); } catch {}
+    try {
+      // Init DB
+      try { await db.init(); } catch {}
 
-    // Init i18n
-    await i18n.init();
-    window.setLang = (locale) => i18n.setLocale(locale);
+      // Init i18n
+      try { await i18n.init(); } catch { console.warn('[LifeGex] i18n init failed'); }
+      window.setLang = (locale) => i18n.setLocale(locale);
 
-    // Accessibility
-    a11y.createSkipLink();
+      // Accessibility
+      a11y.createSkipLink();
 
-    // Scroll
-    if (!store.get('reducedMotion')) {
-      this.#initScroll();
-    }
-
-    // Visual effects
-    this.#initEffects();
-
-    // Animations
-    this.#initAnimations();
-
-    // Components
-    this.#initComponents();
-
-    // Loader
-    this.#hideLoader();
-
-    // Service Worker
-    if (config.features.serviceWorker) {
-      this.#registerSW();
-    }
-
-    // Keyboard shortcuts
-    keyboard.register('Cmd+K', () => store.set('commandOpen', true));
-    keyboard.register('Escape', () => {
-      store.set('commandOpen', false);
-      store.set('menuOpen', false);
-    });
-
-    // URL sync
-    urlSync.onChange((params) => {
-      if (params.lang) i18n.setLocale(params.lang);
-      if (params.section) {
-        const el = document.querySelector(`#${params.section}`);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      // Scroll
+      if (!store.get('reducedMotion')) {
+        this.#initScroll();
       }
-    });
 
-    // State machine
-    appMachine.transition('LOADED');
-    store.set('loading', false);
-    store.set('loaded', true);
+      // Visual effects
+      this.#initEffects();
 
-    // Mark main content
-    document.getElementById('main')?.setAttribute('role', 'main');
+      // Animations
+      this.#initAnimations();
 
-    // console.log(`[LifeGex] v${config.app.version} initialized`);
+      // Components
+      this.#initComponents();
+
+      // Service Worker
+      if (config.features.serviceWorker) {
+        this.#registerSW();
+      }
+
+      // Keyboard shortcuts
+      keyboard.register('Cmd+K', () => store.set('commandOpen', true));
+      keyboard.register('Escape', () => {
+        store.set('commandOpen', false);
+        store.set('menuOpen', false);
+      });
+
+      // URL sync
+      urlSync.onChange((params) => {
+        if (params.lang) i18n.setLocale(params.lang);
+        if (params.section) {
+          const el = document.querySelector(`#${params.section}`);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+
+      // State machine
+      appMachine.transition('LOADED');
+      store.set('loading', false);
+      store.set('loaded', true);
+
+      // Mark main content
+      document.getElementById('main')?.setAttribute('role', 'main');
+
+      // console.log(`[LifeGex] v${config.app.version} initialized`);
+    } catch (e) {
+      console.error('[LifeGex] Init error:', e);
+    } finally {
+      // Always hide loader, even if init fails
+      this.#hideLoader();
+    }
   }
 
   #initScroll() {
