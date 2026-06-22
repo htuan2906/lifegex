@@ -42,7 +42,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- Loader -->
-  <div class="loader" id="loader">
+  <div class="loader hidden" id="loader" aria-hidden="true">
     <div class="loader-logo">LifeGex</div>
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
     <div class="loader-text" data-i18n="loader_label">Loading</div>
@@ -339,6 +339,13 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function(r) {
         r.forEach(function(s) { s.unregister(); });
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(keys) {
+        keys.forEach(function(key) {
+          if (key.indexOf('lgx-') === 0) caches.delete(key);
+        });
       });
     }
     // Hide loader after 3s if JS has loaded but app hasn't initialized

@@ -27,7 +27,6 @@ class I18nEngine {
     await this.#loadLocale(this.#locale);
     document.documentElement.lang = this.#locale;
     this.#applyTranslations();
-    this.#observeDynamic();
   }
 
   async setLocale(locale) {
@@ -87,23 +86,39 @@ class I18nEngine {
     return val;
   }
 
-  #applyTranslations() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
+  #applyTranslations(root = document) {
+    const i18nElements = [];
+    const placeholderElements = [];
+    const altElements = [];
+
+    if (root.nodeType === Node.ELEMENT_NODE) {
+      if (root.matches('[data-i18n]')) i18nElements.push(root);
+      if (root.matches('[data-i18n-placeholder]')) placeholderElements.push(root);
+      if (root.matches('[data-i18n-alt]')) altElements.push(root);
+    }
+
+    if (root.querySelectorAll) {
+      i18nElements.push(...root.querySelectorAll('[data-i18n]'));
+      placeholderElements.push(...root.querySelectorAll('[data-i18n-placeholder]'));
+      altElements.push(...root.querySelectorAll('[data-i18n-alt]'));
+    }
+
+    i18nElements.forEach(el => {
       const key = el.dataset.i18n;
       if (!this.#fallbacks.has(key)) this.#fallbacks.set(key, el.textContent);
-      el.textContent = this.t(key);
+      const translated = this.t(key);
+      if (el.textContent !== translated) el.textContent = translated;
     });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      el.placeholder = this.t(el.dataset.i18nPlaceholder);
-    });
-    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
-      el.alt = this.t(el.dataset.i18nAlt);
-    });
-  }
 
-  #observeDynamic() {
-    this.#observer = new MutationObserver(() => this.#applyTranslations());
-    this.#observer.observe(document.body, { childList: true, subtree: true });
+    placeholderElements.forEach(el => {
+      const translated = this.t(el.dataset.i18nPlaceholder);
+      if (el.placeholder !== translated) el.placeholder = translated;
+    });
+
+    altElements.forEach(el => {
+      const translated = this.t(el.dataset.i18nAlt);
+      if (el.alt !== translated) el.alt = translated;
+    });
   }
 
   destroy() {

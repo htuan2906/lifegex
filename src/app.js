@@ -42,7 +42,7 @@ export class App {
       window.setLang = (locale) => i18n.setLocale(locale);
       a11y.createSkipLink();
 
-      if (!store.get('reducedMotion')) {
+      if (config.features.smoothScroll && !store.get('reducedMotion')) {
         this.#initScroll();
       }
       this.#initEffects();
@@ -80,8 +80,12 @@ export class App {
   }
 
   #initEffects() {
-    try { cursorFX.init(); } catch (e) { console.warn('[LifeGex] cursorFX:', e); }
-    try { sparkleTrail.init(); } catch (e) { console.warn('[LifeGex] sparkleTrail:', e); }
+    if (config.features.cursorFX) {
+      try { cursorFX.init(); } catch (e) { console.warn('[LifeGex] cursorFX:', e); }
+    }
+    if (config.features.particles) {
+      try { sparkleTrail.init(); } catch (e) { console.warn('[LifeGex] sparkleTrail:', e); }
+    }
     if (store.get('reducedMotion')) {
       cursorFX.disableTrail();
       sparkleTrail.disable();
