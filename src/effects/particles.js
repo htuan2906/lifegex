@@ -1,6 +1,7 @@
 /* Task 3 (enhanced): Three.js Background Particle System */
 import { config } from '../utils/config.js';
 import { store } from '../state/store.js';
+import { sharedRAF } from '../utils/raf.js';
 import * as THREE from 'three';
 
 class ParticleBackground {
@@ -9,7 +10,7 @@ class ParticleBackground {
   #renderer = null;
   #points = null;
   #graphGroup = null;
-  #raf = null;
+  #step = null;
   #nodeMat = null;
   #edgeMat = null;
   #pm = null;
@@ -126,8 +127,7 @@ class ParticleBackground {
   }
 
   #animate() {
-    const anim = () => {
-      this.#raf = requestAnimationFrame(anim);
+    this.#step = () => {
       if (this.#points) {
         this.#points.rotation.y += 0.0003;
         this.#points.rotation.x += 0.0001;
@@ -138,11 +138,11 @@ class ParticleBackground {
       }
       this.#renderer.render(this.#scene, this.#camera);
     };
-    anim();
+    sharedRAF.add(this.#step);
   }
 
   destroy() {
-    if (this.#raf) cancelAnimationFrame(this.#raf);
+    if (this.#step) sharedRAF.remove(this.#step);
     if (this.#renderer) this.#renderer.dispose();
     if (this.#pm) this.#pm.dispose();
     if (this.#gp) this.#gp.dispose();

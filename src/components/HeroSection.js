@@ -3,10 +3,11 @@ import { BaseComponent } from './BaseComponent.js';
 import { morphLogo } from '../animations/morphLogo.js';
 import { textSplitter } from '../animations/textSplit.js';
 import { revealEngine } from '../animations/reveal.js';
+import { sharedRAF } from '../utils/raf.js';
 import * as THREE from 'three';
 
 export class HeroSection extends BaseComponent {
-  #rafId = null;
+  #step = null;
   #renderer = null;
   #scene = null;
   #cam = null;
@@ -103,8 +104,7 @@ export class HeroSection extends BaseComponent {
       };
       document.addEventListener('mousemove', this._heroMouseHandler);
 
-      const anim = () => {
-        this.#rafId = requestAnimationFrame(anim);
+      this.#step = () => {
         if (this.#graphGroup) {
           this.#graphGroup.rotation.x += 0.003;
           this.#graphGroup.rotation.y += 0.006;
@@ -119,12 +119,12 @@ export class HeroSection extends BaseComponent {
         }
         if (this.#renderer && this.#scene && this.#cam) this.#renderer.render(this.#scene, this.#cam);
       };
-      anim();
+      sharedRAF.add(this.#step);
     } catch (e) { /* silent */ }
   }
 
   destroy() {
-    if (this.#rafId) cancelAnimationFrame(this.#rafId);
+    if (this.#step) sharedRAF.remove(this.#step);
     if (this._heroMouseHandler) document.removeEventListener('mousemove', this._heroMouseHandler);
     if (this.#renderer) this.#renderer.dispose();
     if (this.#nodeMat) this.#nodeMat.dispose();

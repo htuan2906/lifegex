@@ -1,9 +1,11 @@
 /* Task 18: Lenis Smooth Scroll Configuration */
 import Lenis from 'lenis';
 import { store } from '../state/store.js';
+import { sharedRAF } from '../utils/raf.js';
 
 class LenisScroll {
   #instance = null;
+  #step = null;
 
   get instance() { return this.#instance; }
 
@@ -26,12 +28,8 @@ class LenisScroll {
       document.getElementById('navbar')?.classList.toggle('scrolled', e.scroll > 60);
     });
 
-    const raf = (time) => {
-      if (!this.#instance) return;
-      this.#instance.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+    this.#step = (time) => this.#instance?.raf(time);
+    sharedRAF.add(this.#step);
 
     store.set('lenis', this.#instance);
     return this.#instance;
@@ -49,6 +47,7 @@ class LenisScroll {
   }
 
   destroy() {
+    if (this.#step) sharedRAF.remove(this.#step);
     if (this.#instance) {
       this.#instance.destroy();
       this.#instance = null;
