@@ -38,9 +38,25 @@ export class App {
 
     try {
       try { await db.init(); } catch {}
-      try { await i18n.init(); } catch { console.warn('[LifeGex] i18n init failed'); }
+      try {
+        const requestedLocale = urlSync.get('lang');
+        if (requestedLocale) await i18n.setLocale(requestedLocale);
+        else await i18n.init();
+      } catch { console.warn('[LifeGex] i18n init failed'); }
       window.setLang = (locale) => i18n.setLocale(locale);
+      const syncLanguageControl = () => {
+        const labels = { en: 'EN', zh: '中文', es: 'ES', fr: 'FR', vi: 'VI' };
+        const current = document.getElementById('langCurrent');
+        if (current) current.textContent = labels[i18n.locale] || i18n.locale.toUpperCase();
+        document.querySelectorAll('#langDropdown [data-lang]').forEach((item) => {
+          const active = item.dataset.lang === i18n.locale;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+      };
+      syncLanguageControl();
       i18n.on('change', () => {
+        syncLanguageControl();
         const heroTitle = document.getElementById('heroTitle');
         if (!heroTitle) return;
         delete heroTitle.dataset.splitDone;

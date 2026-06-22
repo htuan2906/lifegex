@@ -30,7 +30,11 @@ class I18nEngine {
   }
 
   async setLocale(locale) {
-    if (locale === this.#locale) return;
+    if (locale === this.#locale) {
+      if (!this.#loaded.has(locale)) await this.#loadLocale(locale);
+      this.#applyTranslations();
+      return;
+    }
     const prev = this.#locale;
     this.#locale = locale;
     try { localStorage.setItem(config.storage.locale, locale); } catch {}
