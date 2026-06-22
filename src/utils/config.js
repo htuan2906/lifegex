@@ -10,8 +10,8 @@ export const config = Object.freeze({
   },
   features: {
     darkMode: true,
-    cursorFX: !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(pointer: coarse)').matches,
-    particles: !matchMedia('(prefers-reduced-motion: reduce)').matches,
+    cursorFX: false,
+    particles: false,
     fluidSim: false,
     textSplit: !matchMedia('(prefers-reduced-motion: reduce)').matches,
     parallax: !matchMedia('(prefers-reduced-motion: reduce)').matches,
