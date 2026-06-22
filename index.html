@@ -335,6 +335,13 @@
 
   <script>
     window.setLang = function() {};
+    // Unregister stale service workers
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(r) {
+        r.forEach(function(s) { s.unregister(); });
+      });
+    }
+    // Hide loader after 3s if JS has loaded but app hasn't initialized
     setTimeout(function() {
       var el = document.getElementById('loader');
       if (el) { el.style.display = 'none'; el.style.opacity = '0'; el.style.visibility = 'hidden'; }
